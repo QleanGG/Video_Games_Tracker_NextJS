@@ -1,36 +1,57 @@
-This is a [Next.js](https://nextjs.org/) project bootstrapped with [`create-next-app`](https://github.com/vercel/next.js/tree/canary/packages/create-next-app).
+# Game Vault Progress
 
-## Getting Started
+## Current Components
 
-First, run the development server:
+- CallToAction
+- FeaturedGames
+- Footer
+- HeroSection
+- Layout
+- Nav
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+## Current Pages
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+- _app.tsx
+- _document.tsx
+- index.tsx
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+## To-Do List
 
-This project uses [`next/font`](https://nextjs.org/docs/basic-features/font-optimization) to automatically optimize and load Inter, a custom Google Font.
+### Components to Add
+1. **LatestNews**: Display the latest news related to games and the gaming industry.
+2. **UserProfile**: A component to display and edit user profiles.
+3. **GameDetails**: A component to show detailed information about a specific game.
+4. **GameList**: A component to list games based on various filters and categories.
+5. **Review**: A component to show user reviews for games.
 
-## Learn More
+### Pages to Add
+1. **Login Page**: A page for users to log in.
+2. **Register Page**: A page for new users to sign up.
+3. **Games Page**: A page to list and filter all games.
+4. **Platforms Page**: A page to list and filter games by platform.
+5. **Profile Page**: A page for users to view and edit their profiles.
+6. **Game Details Page**: A page to show detailed information about a specific game.
+7. **User Reviews Page**: A page to show user reviews.
 
-To learn more about Next.js, take a look at the following resources:
+### Features to Implement
+1. **Authentication**: Implement login and registration using Passport.js.
+2. **Authorization**: Protect routes and ensure only authenticated users can access certain pages.
+3. **API Integration**: Fetch game data from an external API.
+4. **Redux Integration**: Manage global state using Redux.
+5. **Responsive Design**: Ensure the website is responsive and works well on all devices.
+6. **Testing**: Write unit and integration tests for components and pages.
+7. **Styling**: Improve the visual styling of the website using Material-UI and custom CSS.
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### Enhancements
+1. **Game Recommendations**: Implement a recommendation system based on user preferences.
+2. **User Reviews and Ratings**: Allow users to write reviews and rate games.
+3. **Game Tracking**: Enable users to track their game progress.
+4. **Notifications**: Implement a notification system to alert users of updates and new content.
+5. **Search Functionality**: Add a search bar to easily find games and content.
+6. **Dark Mode**: Implement a dark mode for better user experience during night time.
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js/) - your feedback and contributions are welcome!
+## Additional Notes
 
-## Deploy on Vercel
-
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/deployment) for more details.
+- Ensure all components are well-documented.
+- Follow best practices for accessibility and performance.
+- Regularly commit and push changes to the repository.
