@@ -6,7 +6,7 @@ import styles from '../styles/styles';
 const CallToAction = () => {
   return (
     <Box sx={styles.sectionLight}>
-      <Container maxWidth="lg" sx={{ py: 6, textAlign: 'center' }}>
+      <Container maxWidth="lg" sx={{ py: 8, textAlign: 'center' }}>
         <Typography variant="h4" sx={{ color: 'text.primary', mb: 2 }}>Join Game Vault Today</Typography>
         <Typography variant="body1" sx={{ color: 'text.secondary', mb: 4 }}>
           Discover a world of gaming with Game Vault. Track your games, connect with friends, and stay up-to-date with the latest news.
