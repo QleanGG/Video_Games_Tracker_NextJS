@@ -1,5 +1,3 @@
-// components/GameCard.tsx
-
 import { Box, Typography, IconButton, Chip } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import Image from 'next/image';
@@ -7,9 +5,9 @@ import { useRouter } from 'next/router';
 import { Game } from '@/types';
 
 interface GameCardProps {
-    game: Game;
-    onAddGame: (gameId: number) => void;
-  }
+	game: Game;
+	onAddGame: (gameId: number) => void;
+}
 
 const GameCard: React.FC<GameCardProps> = ({ game, onAddGame }) => {
 	const router = useRouter();
@@ -20,17 +18,19 @@ const GameCard: React.FC<GameCardProps> = ({ game, onAddGame }) => {
 
 	return (
 		<Box>
-			<Image
-				src={
-					game.imageUrl != null
-						? `${process.env.NEXT_PUBLIC_BACKEND_URL}${game.imageUrl}`
-						: `${process.env.NEXT_PUBLIC_BACKEND_URL}/game_images/default.webp`
-				}
-				alt={game.title}
-				width={267}
-				height={358}
-                priority={true}
-			/>
+			<Box sx={{ cursor: 'pointer' }} onClick={() => handleNavigate(game.slug)}>
+				<Image
+					src={
+						game.imageUrl != null
+							? `${process.env.NEXT_PUBLIC_BACKEND_URL}${game.imageUrl}`
+							: `${process.env.NEXT_PUBLIC_BACKEND_URL}/game_images/default.webp`
+					}
+					alt={game.title}
+					width={267}
+					height={358}
+					priority={true}
+				/>
+			</Box>
 			<Box
 				display="flex"
 				alignItems="center"
@@ -50,10 +50,10 @@ const GameCard: React.FC<GameCardProps> = ({ game, onAddGame }) => {
 				</IconButton>
 			</Box>
 			<Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
-            {game.genres.map((genre) => (
-              <Chip color='primary' key={genre.id} label={genre.name} />
-            ))}
-          </Box>
+				{game.genres.map((genre) => (
+					<Chip color="primary" key={genre.id} label={genre.name} />
+				))}
+			</Box>
 		</Box>
 	);
 };
