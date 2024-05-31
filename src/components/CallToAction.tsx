@@ -39,7 +39,7 @@ const CallToAction = () => {
         </Grid>
         <Box sx={{ mt: 4 }}>
           <Link href="/register" passHref>
-            <Button variant="contained" color="secondary" sx={{ px: 4, py: 1.5 }}>
+            <Button variant="contained" color="primary" sx={{ px: 4, py: 1.5 }}>
               Get Started
             </Button>
           </Link>

@@ -1,9 +1,10 @@
 import React from 'react';
-import { Box, Typography, CircularProgress, Card, CardContent, CardMedia, CardActions, Button } from '@mui/material';
+import { Box, Typography, CircularProgress, Card, CardContent, CardMedia, Button, CardActions } from '@mui/material';
 import { useFeaturedGames } from '../hooks/useFeaturedGames';
 import Image from 'next/image';
-import styles from '../styles/styles'; // Adjust the path as necessary
-import { Game } from '../types/game'; // Import the Game type
+import Link from 'next/link';
+import styles from '../styles/styles';
+import { Game } from '../types/game';
 
 const FeaturedGames: React.FC = () => {
   const { data: games, isLoading, error } = useFeaturedGames();
@@ -23,36 +24,40 @@ const FeaturedGames: React.FC = () => {
   return (
     <Box sx={{ ...styles.sectionDark, overflow: 'hidden', position: 'relative', p: 2 }}>
       <Box sx={{ ...styles.marquee }}>
-        {games.concat(games).map((game: Game, index: number) => (
+        {games.map((game: Game, index: number) => (
           <Card key={`${game.id}-${index}`} sx={styles.card}>
             <CardMedia>
               <Box sx={{ position: 'relative', width: '100%', height: 150 }}>
                 <Image
                   src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${game.imageUrl}`}
                   alt={game.title}
-                  layout="fill"
-                  objectFit="cover"
+                  width={250}
+                  height={150}
+                  style={{objectFit: "cover"}}
                   quality={100}
+                  sizes="(max-width: 250px) 100vw, 50vw"
                 />
               </Box>
             </CardMedia>
             <CardContent>
-              <Typography variant="h6">{game.title}</Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="h6" color={"text.secondary"} sx={styles.truncatedText}>{game.title}</Typography>
+              <Typography variant="body2" color="text.primary" >
                 {game.description}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.primary">
                 Rating: {game.rating}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.primary">
                 Platforms: {game.platforms.map(platform => platform.name).join(', ')}
               </Typography>
-              <Typography variant="body2" color="text.secondary">
+              <Typography variant="body2" color="text.primary">
                 Genres: {game.genres.map(genre => genre.name).join(', ')}
               </Typography>
             </CardContent>
-            <CardActions>
-              <Button size="small">Learn More</Button>
+            <CardActions sx={{ justifyContent: 'center' }}>
+              <Link href={`/games/${game.slug}`}>
+                <Button variant='contained' color='primary' size="small">Learn More</Button>
+              </Link>
             </CardActions>
           </Card>
         ))}

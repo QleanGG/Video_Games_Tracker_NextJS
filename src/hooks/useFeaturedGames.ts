@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import axios from 'axios';
 import { Game } from '../types';
-import axiosInstance from '../api/axios';
+import axiosInstance from '../api/apiAxios';
 
 const fetchFeaturedGames = async (): Promise<Game[]> => {
   const { data } = await axiosInstance.get(`/games/featured`);

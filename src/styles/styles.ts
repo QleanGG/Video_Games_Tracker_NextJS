@@ -49,31 +49,42 @@ const styles = {
 		justifyContent: 'center',
 		alignItems: 'center',
 	},
-    marquee: {
+	marquee: {
 		display: 'flex',
 		flexDirection: 'row',
 		flexWrap: 'nowrap' as const,
 		overflow: 'hidden',
 		whiteSpace: 'nowrap' as const,
-		animation: 'marquee 80s linear infinite',
+		animation: 'marquee 60s linear infinite', // Slower animation
 		'&:hover': {
 			animationPlayState: 'paused',
 		},
 		'@keyframes marquee': {
-			'0%': { transform: 'translateX(0%)' },
-			'100%': { transform: 'translateX(-50%)' },
+			'0%': { transform: 'translateX(100)' },
+			'100%': { transform: 'translateX(-100%)' },
 		},
 	},
 	card: {
-		width: 250,
-		marginRight: 3, 
+		width: '250px',
+		height: '350px', // Adjust the height as needed
+		margin: '0 8px', // Add margin to space out the cards
+		display: 'flex',
+		flexDirection: 'column',
+		justifyContent: 'space-between',
+	  },
+	truncatedText: {
+		overflow: 'hidden',
+		display: 'webkitBox',
+		'webkitLineClamp': 2,
+		'webkitBoxOrient': 'vertical',
+		textOverflow: 'ellipsis',
 	},
 	featureCard: {
-		padding: 2,
+		padding: 4,
 		textAlign: 'left' as const,
 	},
 	footer: {
-		bgcolor: 'secondary.main',
+		bgcolor: 'primary.main',
 		color: 'text.primary',
 		p: 2,
 		mt: 'auto',

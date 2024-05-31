@@ -1,4 +1,3 @@
-import Layout from '../components/layout';
 import HeroSection from '../components/HeroSection';
 import FeaturedGames from '../components/FeaturedGames';
 import CallToAction from '@/components/CallToAction';
@@ -6,11 +5,11 @@ import CallToAction from '@/components/CallToAction';
 
 const HomePage = () => {
   return (
-    <Layout>
+    <>
       <HeroSection />
       <FeaturedGames />
       <CallToAction />
-    </Layout>
+    </>
   );
 };
 
