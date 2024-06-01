@@ -107,9 +107,10 @@ const styles = {
 		textAlign: 'center' as const,
 	},
 	formField: {
+		mb: 2,
 		'& .MuiInputBase-root': {
-			color: 'text.secondary',
-			backgroundColor: '#f5f5f5',
+			color: 'text.primary',
+			backgroundColor: 'background.paper',
 			borderRadius: 1,
 		},
 		'& .MuiOutlinedInput-root': {
@@ -123,11 +124,44 @@ const styles = {
 				borderColor: 'primary.main',
 			},
 		},
+		'& .MuiInputLabel-root': {
+			color: 'text.secondary',
+		},
+	},
+	mainPlatformField: {
+		mb: 2,
+		'& .MuiInputBase-root': {
+			backgroundColor: 'background.paper',
+			borderRadius: 1,
+			color: 'text.primary',
+		},
+		'& .MuiOutlinedInput-root': {
+			'& fieldset': {
+				borderColor: '#e0e0e0',
+			},
+			'&:hover fieldset': {
+				borderColor: 'primary.main',
+			},
+			'&.Mui-focused fieldset': {
+				borderColor: 'primary.main',
+			},
+		},
+		'& .MuiInputLabel-root': {
+			color: 'text.secondary',
+		},
+	},
+	menuItem: {
+		color: 'text.primary',
+		backgroundColor: 'background.paper',
+		'&:hover': {
+			backgroundColor: 'primary.light',
+		},
 	},
 	submitButton: {
 		mt: 3,
 		py: 1.5,
 		backgroundColor: 'primary.main',
+		color: 'text.primary',
 		'&:hover': {
 			backgroundColor: 'primary.dark',
 		},
@@ -136,18 +170,18 @@ const styles = {
 		display: 'flex',
 		flexDirection: 'column',
 		alignItems: 'center',
-		justifyContent: 'center',
-		height: '100vh',
 		padding: 4,
 	},
 	profileTitle: {
 		marginBottom: 3,
+		color: 'text.primary',
 	},
-	profileItem: {
-		marginBottom: 2,
-	},
-	profileButton: {
-		marginTop: 4,
+	userGameCard: {
+		p: 2,
+		mb: 2,
+		borderRadius: 2,
+		backgroundColor: 'background.paper',
+		boxShadow: 1,
 	},
 };
 
