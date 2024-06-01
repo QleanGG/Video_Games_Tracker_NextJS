@@ -1,4 +1,3 @@
-// styles/styles.ts
 const styles = {
 	heroSection: {
 	  bgcolor: 'primary.main',

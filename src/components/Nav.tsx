@@ -10,7 +10,7 @@ const Nav = () => {
           <Box sx={{ display: 'flex', alignItems: 'center' }}>
             <Link href="/">
               <Box sx={{ display: 'flex', alignItems: 'center', cursor: 'pointer' }}>
-                <Image src="/gameLogo.webp" alt="Game Vault Logo" width={40} height={40} />
+                <Image src="/gameLogo.webp" alt="Game Vault Logo" width={40} height={40} priority={true}/>
               </Box>
             </Link>
             <Box sx={{ ml: 2, display: 'flex', gap: 2 }}>

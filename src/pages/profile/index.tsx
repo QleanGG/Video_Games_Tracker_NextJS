@@ -7,6 +7,8 @@ import ProfileForm from '@/components/profile/ProfileForm';
 import styles from '@/styles/styles';
 import mainApi from '@/api/apiAxios';
 import { useProfile } from '@/hooks/useProfile';
+import ExampleImage from '@/components/ExampleImage';
+import ProfileAvatar from '@/components/profile/ProfileAvatar';
 
 const ProfilePage: React.FC = () => {
   const { user, setUser, userLoading } = useUser();
@@ -55,7 +57,7 @@ const ProfilePage: React.FC = () => {
         <Grid container spacing={3} sx={styles.profileGrid}>
           <Grid item xs={12} md={4}>
             <Paper sx={styles.profilePaper}>
-              <Avatar src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${data.profile.avatarUrl}`} alt={user?.username || 'User'} sx={styles.profileAvatar} />
+              <ProfileAvatar avatarUrl={data.profile.avatarUrl}/>
               <Typography variant="h5" sx={styles.profileUsername}>{user?.username}</Typography>
             </Paper>
           </Grid>
