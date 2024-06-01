@@ -7,7 +7,6 @@ import ProfileForm from '@/components/profile/ProfileForm';
 import styles from '@/styles/styles';
 import mainApi from '@/api/apiAxios';
 import { useProfile } from '@/hooks/useProfile';
-import ExampleImage from '@/components/ExampleImage';
 import ProfileAvatar from '@/components/profile/ProfileAvatar';
 
 const ProfilePage: React.FC = () => {
@@ -52,7 +51,7 @@ const ProfilePage: React.FC = () => {
     <Box sx={styles.fullPageContainer}>
       <Typography variant="h4" sx={styles.profileTitle}>Profile</Typography>
       {editMode ? (
-        <ProfileForm onCancel={handleCancelEdit} />
+        <ProfileForm avatarUrl={data.profile.avatarUrl} onCancel={handleCancelEdit} />
       ) : (
         <Grid container spacing={3} sx={styles.profileGrid}>
           <Grid item xs={12} md={4}>

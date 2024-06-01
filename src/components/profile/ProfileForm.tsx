@@ -6,12 +6,14 @@ import { useUser } from '@/contexts/UserContext';
 import { useProfile, useUpdateProfile } from '@/hooks/useProfile';
 import { PlatformName, Platform } from '@/types';
 import styles from '@/styles/styles';
+import ProfileAvatar from './ProfileAvatar';
 
 interface ProfileFormProps {
   onCancel: () => void;
+  avatarUrl: string;
 }
 
-const ProfileForm: React.FC<ProfileFormProps> = ({ onCancel }) => {
+const ProfileForm: React.FC<ProfileFormProps> = ({ onCancel,avatarUrl }) => {
   const { user } = useUser();
   const [selectedPlatforms, setSelectedPlatforms] = useState<PlatformName[]>([]);
   const { data, isPending: profilePending } = useProfile();
@@ -57,7 +59,7 @@ const ProfileForm: React.FC<ProfileFormProps> = ({ onCancel }) => {
 
   return (
     <Box sx={styles.profileContainer}>
-      <Avatar src={`${process.env.NEXT_PUBLIC_BACKEND_URL}${data.profile.avatarUrl}`} alt={user?.username || 'User'} sx={{ width: 100, height: 100, mb: 3 }} />
+      <ProfileAvatar avatarUrl={avatarUrl}/>
       <Box component="form" onSubmit={handleUpdateProfile} sx={styles.formContainer}>
         <TextField
           label="Bio"
