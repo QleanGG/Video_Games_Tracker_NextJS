@@ -42,7 +42,7 @@ const FeaturedGames: React.FC = () => {
             <CardContent>
               <Typography variant="h6" color={"text.secondary"} sx={styles.truncatedText}>{game.title}</Typography>
               <Typography variant="body2" color="text.primary" >
-                {game.description}
+                {/* {game.description} */}
               </Typography>
               <Typography variant="body2" color="text.primary">
                 Rating: {game.rating}

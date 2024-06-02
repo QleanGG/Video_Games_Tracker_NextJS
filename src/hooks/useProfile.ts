@@ -16,10 +16,11 @@ const updateProfile = async (formData: FormData): Promise<Profile> => {
   return data.profile;
 };
 
-export const useProfile = () => {
+export const useProfile = (isEnabled: boolean) => {
   return useQuery<ProfileResponse, Error>({
     queryKey: ['profile'],
     queryFn: fetchProfile,
+    enabled: isEnabled
   });
 };
 

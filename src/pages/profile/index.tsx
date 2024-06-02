@@ -12,7 +12,7 @@ import ProfileAvatar from '@/components/profile/ProfileAvatar';
 const ProfilePage: React.FC = () => {
   const { user, setUser, userLoading } = useUser();
   const router = useRouter();
-  const { data, isPending: profilePending } = useProfile();
+  const { data, isPending: profilePending } = useProfile(!!user);
   const [editMode, setEditMode] = useState(false);
 
   useEffect(() => {
@@ -87,7 +87,7 @@ const ProfilePage: React.FC = () => {
           <Grid item xs={12} md={6}>
             <Paper sx={styles.profilePaper}>
               <Typography variant="h6">Platforms</Typography>
-              <Typography variant="body1">{data.profile.platforms.map(platform => platform.name).join(', ')}</Typography>
+              <Typography variant="body1">{data.profile.platforms? data.profile.platforms.map(platform => platform.name).join(', '): ''}</Typography>
             </Paper>
           </Grid>
           <Grid item xs={12}>

@@ -6,14 +6,15 @@ import styles from '@/styles/styles';
 
 interface ProfileAvatarProps {
     avatarUrl: string;
+    size?: number;
   }
 
-const ProfileAvatar: React.FC<ProfileAvatarProps> = ({avatarUrl}) => {
+const ProfileAvatar: React.FC<ProfileAvatarProps> = ({avatarUrl, size = 100}) => {
   const { user } = useUser();
   const imageUrl = `${process.env.NEXT_PUBLIC_BACKEND_URL}${avatarUrl}`;
 
   return (
-    <Avatar sx={styles.profileAvatar}>
+    <Avatar sx={{...styles.profileAvatar, width:size, height:size }}>
       <div style={{ width: '100%', height: '100%', position: 'relative' }}>
         <Image
           src={imageUrl}
