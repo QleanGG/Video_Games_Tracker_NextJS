@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
-import { Game } from '@/types'; 
-import { Box, Typography, Chip, CircularProgress, Button, Grid } from '@mui/material';
+import { Game, GameStatus, UserGame } from '@/types'; 
+import { Box, Typography, Chip, CircularProgress, Button, Grid, styled } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useGame } from '@/hooks/useGame';
 import { useYouTubeVideos } from '@/hooks/useYoutubevideos';
@@ -8,19 +8,46 @@ import Image from 'next/image';
 import { fetchAllGames } from '@/services/fetchAllGames'; // Adjust the import path as necessary
 import axios from 'axios';
 import YouTubeVideo from '@/components/YoutubeVideo';
+import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
+import { toast } from 'react-toastify';
 
 interface GameProps {
   initialGameData: Game;
 }
+
+const StyledButton = styled(Button)(({ theme }) => ({
+	'&.Mui-disabled': {
+	  color: '#A63446',
+	},
+  }));
 
 const GamePage = ({ initialGameData }: GameProps) => {
   const router = useRouter();
   const { slug } = router.query as { slug: string };
 
   const { data: game, isLoading: isLoadingGame, error: gameError } = useGame(slug);
-
-  // Use useYouTubeVideos only if the game title is defined
+  const { data: userGames, isLoading: isUserGamesLoading } = useUserGames();
+  const { mutate: addUserGame, isPending: isAdding } = useAddUserGame();
   const { data: videos, isLoading: isLoadingVideos, error: videoError } = useYouTubeVideos(game ? game.title : '');
+
+  const handleAddGame = () => {
+    if (game) {
+      addUserGame(
+        { gameId: game.id, status: GameStatus.Interested },
+        {
+          onSuccess: () => {
+            toast.success('Game added successfully');
+          },
+          onError: () => {
+            toast.error('Failed to add game');
+          },
+        }
+      );
+    }
+  };
+
+  const isGameAdded = userGames?.some((userGame: UserGame) => userGame.game.id === game?.id);
+
 
   if (isLoadingGame) {
     return <CircularProgress />;
@@ -66,7 +93,14 @@ const GamePage = ({ initialGameData }: GameProps) => {
             ))}
           </Box>
           <Box sx={{ mt: 4 }}>
-            <Button variant="contained" color='primary'>Add to Library</Button>
+          <StyledButton
+              variant="contained"
+              color="primary"
+              onClick={handleAddGame}
+              disabled={isGameAdded || isAdding}
+            >
+              {isGameAdded ? 'Added' : isAdding ? 'Adding...' : 'Add to Library'}
+            </StyledButton>
           </Box>
         </Box>
         <Box sx={{ width: 300, height: 200, ml: 4 }}>
@@ -122,7 +156,7 @@ const GamePage = ({ initialGameData }: GameProps) => {
 };
 
 export const getStaticPaths: GetStaticPaths = async () => {
-  const { data } = await fetchAllGames(); // Fetch all games without pagination and search
+  const { data } = await fetchAllGames();
 
   const paths = data.map((game) => ({
     params: { slug: game.slug },
