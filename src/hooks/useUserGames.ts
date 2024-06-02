@@ -8,7 +8,6 @@ const fetchUserGames = async (): Promise<UserGame[]> => {
 };
 
 const addUserGame = async (userGame: { gameId: number; status: GameStatus; rating?: number; review?: string }): Promise<UserGame> => {
-  console.log(userGame);
   const { data } = await mainApi.post<UserGame>('/user/games', userGame);
   return data;
 };
@@ -23,10 +22,11 @@ const deleteUserGame = async (userGameId: number): Promise<{ message: string }> 
   return data;
 };
 
-export const useUserGames = () => {
+export const useUserGames = (isEnabled: boolean = true) => {
   return useQuery<UserGame[], Error>({
     queryKey: ['userGames'],
     queryFn: fetchUserGames,
+    enabled: isEnabled
   });
 };
 

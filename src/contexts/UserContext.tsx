@@ -1,6 +1,7 @@
 import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
 import { User } from '@/types';
 import mainApi from '@/api/apiAxios';
+import { useQueryClient } from '@tanstack/react-query';
 
 interface UserContextType {
   user: User | null;
@@ -18,12 +19,24 @@ export const useUser = () => {
   return context;
 };
 
+const hasSessionCookie = (): boolean => {
+  const cookies = document.cookie.split(';').map(cookie => cookie.trim());
+  return cookies.some(cookie => cookie.startsWith('connect.sid='));
+};
+
+
 export const UserProvider = ({ children }: { children: ReactNode }) => {
   const [user, setUser] = useState<User | null>(null);
   const [userLoading, setUserLoading] = useState(true);
+  const queryClient = useQueryClient();
 
   useEffect(() => {
     const fetchUser = async () => {
+      if (!hasSessionCookie()) {
+        setUserLoading(false);
+        return;
+      }
+
       try {
         const { data } = await mainApi.get<User>('/auth/user');
         setUser(data);
@@ -32,6 +45,12 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
       } finally {
         setUserLoading(false);
       }
+    };
+
+    const logout = async () => {
+      await mainApi.get('/auth/logout');
+      setUser(null);
+      queryClient.invalidateQueries({ queryKey: 'userGames' }); // Invalidate the userGames query
     };
 
     fetchUser();

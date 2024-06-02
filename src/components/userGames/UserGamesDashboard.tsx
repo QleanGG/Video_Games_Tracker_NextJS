@@ -28,9 +28,9 @@ const UserGamesDashboard = () => {
 
   return (
     <Box sx={styles.dashboardContainer}>
-      <Button variant="contained" sx={styles.addButton} onClick={() => setIsAddModalOpen(true)}>
+      {/* <Button variant="contained" sx={styles.addButton} onClick={() => setIsAddModalOpen(true)}>
         Add Game
-      </Button>
+      </Button> */}
       <List sx={{ mt: 2 }}>
         {isLoading ? (
           <Typography>Loading...</Typography>

@@ -19,9 +19,10 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({avatarUrl, size = 100}) =>
         <Image
           src={imageUrl}
           alt={user?.username || 'User'}
-          layout="fill"
-          objectFit="cover"
+          style={{objectFit:"cover"}}
+          fill
           quality={100}
+          sizes={`${size}px`}
         />
       </div>
     </Avatar>

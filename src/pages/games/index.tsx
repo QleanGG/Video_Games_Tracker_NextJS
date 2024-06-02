@@ -5,13 +5,17 @@ import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
 import GameCard from '@/components/cards/GameCard';
 import { GameStatus } from '@/types';
 import { toast } from 'react-toastify';
+import { useUser } from '@/contexts/UserContext';
+import { useRouter } from 'next/router';
 
 const GamesPage = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const { data: allGamesData, error, isLoading: isAllGamesLoading } = useAllGames(page, 12, search);
-  const { data: userGames, isLoading: isUserGamesLoading } = useUserGames(); 
+  const { user, setUser, userLoading } = useUser();
+  const { data: userGames, isLoading: isUserGamesLoading } = useUserGames(!!user); 
   const { mutate: addUserGame, isPending: isAdding } = useAddUserGame();
+  const router = useRouter();
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -19,6 +23,11 @@ const GamesPage = () => {
   };
 
   const handleAddGame = (gameId: number) => {
+    if (!user) {
+      router.push('/login');
+      toast.info('Please log in to add games to your library');
+      return; 
+    }
     addUserGame(
       { gameId, status: GameStatus.Interested },
       {

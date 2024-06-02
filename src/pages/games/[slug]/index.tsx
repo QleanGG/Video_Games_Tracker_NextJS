@@ -10,6 +10,7 @@ import axios from 'axios';
 import YouTubeVideo from '@/components/YoutubeVideo';
 import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
 import { toast } from 'react-toastify';
+import { useUser } from '@/contexts/UserContext';
 
 interface GameProps {
   initialGameData: Game;
@@ -24,9 +25,9 @@ const StyledButton = styled(Button)(({ theme }) => ({
 const GamePage = ({ initialGameData }: GameProps) => {
   const router = useRouter();
   const { slug } = router.query as { slug: string };
-
+  const { user, setUser, userLoading } = useUser();
   const { data: game, isLoading: isLoadingGame, error: gameError } = useGame(slug);
-  const { data: userGames, isLoading: isUserGamesLoading } = useUserGames();
+  const { data: userGames, isLoading: isUserGamesLoading } = useUserGames(!!user);
   const { mutate: addUserGame, isPending: isAdding } = useAddUserGame();
   const { data: videos, isLoading: isLoadingVideos, error: videoError } = useYouTubeVideos(game ? game.title : '');
 

@@ -44,7 +44,8 @@ const Nav = () => {
 		await logout();
 		setUser(null);
 		setAnchorEl(null);
-		router.push('/login');
+		await router.push('/login');
+		router.reload()
 	};
 
 	if (userLoading) {
