@@ -125,6 +125,16 @@ const Nav = () => {
 									sx={{ animation: 'fadeIn 0.3s' }}
 								>
 									<MenuItem onClick={handleMenuClose}>
+										<Link href="/dashboard">
+											<Box
+												component="a"
+												sx={{ textDecoration: 'none', color: '#FBFEF9' }}
+											>
+												Dashboard
+											</Box>
+										</Link>
+									</MenuItem>
+									<MenuItem onClick={handleMenuClose}>
 										<Link href="/profile">
 											<Box
 												component="a"

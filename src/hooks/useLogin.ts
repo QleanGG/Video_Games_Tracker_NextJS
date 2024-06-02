@@ -19,7 +19,7 @@ export const useLogin = (): UseMutationResult<LoginResponse, Error, LoginData> =
     onSuccess: (data) => {
       setUser(data.user);
       toast.success('Login successful!');
-      router.push('/profile');
+      router.push('/dashboard');
     },
     onError: () => {
       toast.error('Invalid email or password.');

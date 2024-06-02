@@ -8,6 +8,7 @@ const fetchUserGames = async (): Promise<UserGame[]> => {
 };
 
 const addUserGame = async (userGame: { gameId: number; status: GameStatus; rating?: number; review?: string }): Promise<UserGame> => {
+  console.log(userGame);
   const { data } = await mainApi.post<UserGame>('/user/games', userGame);
   return data;
 };

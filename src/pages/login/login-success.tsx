@@ -15,7 +15,7 @@ const LoginSuccess = () => {
         localStorage.setItem('user', JSON.stringify(userData));
         toast.success('Login successful!');
         // Redirect to the home page or another page
-        router.push('/');
+        router.push('/dashboard');
       } catch (error) {
         toast.error('Failed to parse user data.');
       }

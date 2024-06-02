@@ -1,13 +1,17 @@
-
 import { useState, ChangeEvent, useEffect } from 'react';
-import { Box, Container, Grid, TextField, Typography, Button, IconButton } from '@mui/material';
+import { Box, Container, Grid, TextField, Typography, Button, CircularProgress } from '@mui/material';
 import { useAllGames } from '../../hooks/useAllGames';
+import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
 import GameCard from '@/components/cards/GameCard';
+import { GameStatus } from '@/types';
+import { toast } from 'react-toastify';
 
 const GamesPage = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
-  const { data, error, isLoading } = useAllGames(page, 12, search);
+  const { data: allGamesData, error, isLoading: isAllGamesLoading } = useAllGames(page, 12, search);
+  const { data: userGames, isLoading: isUserGamesLoading } = useUserGames(); 
+  const { mutate: addUserGame, isPending: isAdding } = useAddUserGame();
 
   const handleSearch = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -15,11 +19,20 @@ const GamesPage = () => {
   };
 
   const handleAddGame = (gameId: number) => {
-    // Logic to add the game
-    console.log(`Add game with ID: ${gameId}`);
+    addUserGame(
+      { gameId, status: GameStatus.Interested },
+      {
+        onSuccess: () => {
+          toast.success('Game added successfully');
+        },
+        onError: () => {
+          toast.error('Failed to add game');
+        },
+      }
+    );
   };
 
-  if (isLoading) return <div>Loading...</div>;
+  if (isAllGamesLoading || isUserGamesLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading games</div>;
 
   return (
@@ -37,13 +50,17 @@ const GamesPage = () => {
         />
       </Box>
       <Grid container spacing={4}>
-        {data?.data.map((game) => (
+        {allGamesData?.data.map((game) => (
           <Grid item xs={12} sm={6} md={4} key={game.id}>
-            <GameCard game={{
-              ...game,
-              description: game.description || "No description available",
-              imageUrl: game.imageUrl || '/game_images/default.webp'
-            }} onAddGame={handleAddGame} />
+            <GameCard
+              game={{
+                ...game,
+                description: game.description || "No description available",
+                imageUrl: game.imageUrl || '/game_images/default.webp'
+              }}
+              onAddGame={handleAddGame}
+              userGames={userGames || []} // Pass the user games to GameCard
+            />
           </Grid>
         ))}
       </Grid>
@@ -65,15 +82,20 @@ const GamesPage = () => {
           variant="contained"
           color="primary"
           onClick={() => {
-            if (!isLoading && data && data.data && data.data.length === 12) {
+            if (!isAllGamesLoading && allGamesData && allGamesData.data && allGamesData.data.length === 12) {
               setPage((old) => old + 1);
             }
           }}
-          disabled={!data || !data.data || data.data.length < 10}
+          disabled={!allGamesData || !allGamesData.data || allGamesData.data.length < 12}
         >
           Next
         </Button>
       </Box>
+      {isAdding && (
+        <Box mt={2} display="flex" justifyContent="center">
+          <CircularProgress />
+        </Box>
+      )}
     </Container>
   );
 };

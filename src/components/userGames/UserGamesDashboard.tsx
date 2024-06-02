@@ -7,6 +7,7 @@ import { UserGame } from '@/types';
 import EditIcon from '@mui/icons-material/Edit';
 import DeleteIcon from '@mui/icons-material/Delete';
 import { toast } from 'react-toastify';
+import styles from '@/styles/styles';
 
 const UserGamesDashboard = () => {
   const { data: userGames, isLoading } = useUserGames();
@@ -25,40 +26,40 @@ const UserGamesDashboard = () => {
     });
   };
 
-  if (isLoading) {
-    return <Typography>Loading...</Typography>;
-  }
-
   return (
-    <Box>
-      <Button variant="contained" color="primary" onClick={() => setIsAddModalOpen(true)}>
+    <Box sx={styles.dashboardContainer}>
+      <Button variant="contained" sx={styles.addButton} onClick={() => setIsAddModalOpen(true)}>
         Add Game
       </Button>
       <List sx={{ mt: 2 }}>
-        {userGames?.map((userGame) => (
-          <ListItem key={userGame.id}>
-            <ListItemText
-              primary={userGame.game.title}
-              secondary={`Status: ${userGame.status}, Rating: ${userGame.rating}`}
-            />
-            <ListItemSecondaryAction>
-              <IconButton onClick={() => setEditUserGameId(userGame.id)}>
-                <EditIcon />
-              </IconButton>
-              <IconButton onClick={() => handleDelete(userGame.id)}>
-                <DeleteIcon />
-              </IconButton>
-            </ListItemSecondaryAction>
-          </ListItem>
-        ))}
+        {isLoading ? (
+          <Typography>Loading...</Typography>
+        ) : (
+          userGames?.map((userGame) => (
+            <ListItem key={userGame.id} sx={styles.listItem}>
+              <ListItemText
+                primary={userGame.game.title}
+                secondary={`Status: ${userGame.status}, Rating: ${userGame.rating}`}
+              />
+              <ListItemSecondaryAction>
+                <IconButton onClick={() => setEditUserGameId(userGame.id)} sx={{ color: 'text.primary' }}>
+                  <EditIcon />
+                </IconButton>
+                <IconButton onClick={() => handleDelete(userGame.id)} sx={{ color: 'text.primary' }}>
+                  <DeleteIcon />
+                </IconButton>
+              </ListItemSecondaryAction>
+            </ListItem>
+          ))
+        )}
       </List>
       <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
-        <Box sx={{ p: 3, backgroundColor: 'white', borderRadius: 1, maxWidth: 500, margin: 'auto', mt: 5 }}>
+        <Box sx={styles.modalContainer}>
           <AddUserGame />
         </Box>
       </Modal>
       <Modal open={!!editUserGameId} onClose={() => setEditUserGameId(null)}>
-        <Box sx={{ p: 3, backgroundColor: 'white', borderRadius: 1, maxWidth: 500, margin: 'auto', mt: 5 }}>
+        <Box sx={styles.modalContainer}>
           <EditUserGame userGameId={editUserGameId!} onClose={() => setEditUserGameId(null)} />
         </Box>
       </Modal>
