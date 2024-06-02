@@ -46,16 +46,9 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
         setUserLoading(false);
       }
     };
-
-    const logout = async () => {
-      await mainApi.get('/auth/logout');
-      setUser(null);
-      queryClient.invalidateQueries({ queryKey: 'userGames' }); // Invalidate the userGames query
-    };
-
     fetchUser();
   }, []);
-
+  
   return (
     <UserContext.Provider value={{ user, setUser, userLoading }}>
       {children}
