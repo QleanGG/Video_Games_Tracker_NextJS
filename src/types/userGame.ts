@@ -3,13 +3,12 @@ import { User } from './user';
 
 export interface UserGame {
 	id: number;
-	user: User;
-	game: Game;
 	status: GameStatus;
-	review: string;
-	rating: number;
-}
-
+	review?: string | null;  
+	rating?: number | null;  
+	game: Game;
+  }
+  
 export enum GameStatus {
 	Interested = 'Interested',
 	Own = 'Own',

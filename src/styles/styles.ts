@@ -218,7 +218,36 @@ const styles = {
 	profileUsername: {
 	  marginBottom: 2,
 	},
-  };
+  // Dashboard styles
+  dashboardContainer: {
+    color: 'text.primary',
+    padding: 4,
+    backgroundColor: 'background.default',
+    borderRadius: 2,
+  },
+  addButton: {
+    borderRadius: 2,
+    backgroundColor: 'primary.main',
+    color: 'text.primary',
+    '&:hover': {
+      backgroundColor: 'primary.dark',
+    },
+  },
+  listItem: {
+    backgroundColor: 'background.paper',
+    marginBottom: 1,
+    borderRadius: 2,
+    boxShadow: '0 0 10px rgba(0,0,0,0.1)',
+  },
+  modalContainer: {
+    padding: 3,
+    backgroundColor: 'background.paper',
+    borderRadius: 1,
+    maxWidth: 500,
+    margin: 'auto',
+    marginTop: 5,
+  },
+};
   
   export default styles;
   
