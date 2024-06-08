@@ -10,7 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import { UserProvider } from '@/contexts/UserContext';
 
 const queryClient = new QueryClient();
-
 function MyApp({ Component, pageProps }: AppProps) {
 	return (
 		<QueryClientProvider client={queryClient}>

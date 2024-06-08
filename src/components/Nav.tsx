@@ -45,7 +45,6 @@ const Nav = () => {
 		setUser(null);
 		setAnchorEl(null);
 		await router.push('/login');
-		router.reload()
 	};
 
 	if (userLoading) {

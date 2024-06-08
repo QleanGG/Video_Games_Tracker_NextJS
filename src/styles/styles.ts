@@ -14,10 +14,10 @@ const styles = {
 	  flexDirection: 'column' as const,
 	  justifyContent: 'center',
 	  alignItems: 'center',
-	  backgroundImage: 'url("/hero_gamevault.png")',
+	  backgroundImage: 'url("/hero_gamevault.webp")',
 	  backgroundSize: 'cover',
 	  backgroundPosition: 'center',
-	  backgroundColor: 'rgba(26, 26, 29, 0.85)', // Semi-transparent overlay
+	  backgroundColor: 'rgba(26, 26, 29, 0.85)', 
 	  backgroundBlendMode: 'overlay',
 	},
 	sectionLight: {

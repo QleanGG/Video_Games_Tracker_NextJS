@@ -1,5 +1,5 @@
 import { useState, ChangeEvent, useEffect } from 'react';
-import { Box, Container, Grid, TextField, Typography, Button, CircularProgress } from '@mui/material';
+import { Box, Container, Grid, TextField, Typography, Button, Skeleton } from '@mui/material';
 import { useAllGames } from '../../hooks/useAllGames';
 import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
 import GameCard from '@/components/cards/GameCard';
@@ -12,7 +12,7 @@ const GamesPage = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const { data: allGamesData, error, isLoading: isAllGamesLoading } = useAllGames(page, 12, search);
-  const { user, setUser, userLoading } = useUser();
+  const { user } = useUser();
   const { data: userGames, isLoading: isUserGamesLoading } = useUserGames(!!user); 
   const { mutate: addUserGame, isPending: isAdding } = useAddUserGame();
   const router = useRouter();
@@ -41,7 +41,6 @@ const GamesPage = () => {
     );
   };
 
-  if (isAllGamesLoading || isUserGamesLoading) return <div>Loading...</div>;
   if (error) return <div>Error loading games</div>;
 
   return (
@@ -59,19 +58,34 @@ const GamesPage = () => {
         />
       </Box>
       <Grid container spacing={4}>
-        {allGamesData?.data.map((game) => (
-          <Grid item xs={12} sm={6} md={4} key={game.id}>
-            <GameCard
-              game={{
-                ...game,
-                description: game.description || "No description available",
-                imageUrl: game.imageUrl || '/game_images/default.webp'
-              }}
-              onAddGame={handleAddGame}
-              userGames={userGames || []} // Pass the user games to GameCard
-            />
-          </Grid>
-        ))}
+        {(isAllGamesLoading || isUserGamesLoading) ? (
+          Array.from(new Array(12)).map((_, index) => (
+            <Grid item xs={12} sm={6} md={4} key={index}>
+              <Skeleton variant="rectangular" width={267} height={358} />
+              <Box display="flex" alignItems="center" justifyContent="space-between" mt={1}>
+                <Skeleton variant="text" width="70%" />
+                <Skeleton variant="circular" width={40} height={40} />
+              </Box>
+              <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+                <Skeleton variant="rectangular" width="100%" height={30} />
+              </Box>
+            </Grid>
+          ))
+        ) : (
+          allGamesData?.data.map((game) => (
+            <Grid item xs={12} sm={6} md={4} key={game.id}>
+              <GameCard
+                game={{
+                  ...game,
+                  description: game.description || "No description available",
+                  imageUrl: game.imageUrl || '/game_images/default.webp'
+                }}
+                onAddGame={handleAddGame}
+                userGames={userGames || []} 
+              />
+            </Grid>
+          ))
+        )}
       </Grid>
       <Box mt={4} display="flex" justifyContent="center">
         <Button
@@ -100,11 +114,6 @@ const GamesPage = () => {
           Next
         </Button>
       </Box>
-      {isAdding && (
-        <Box mt={2} display="flex" justifyContent="center">
-          <CircularProgress />
-        </Box>
-      )}
     </Container>
   );
 };

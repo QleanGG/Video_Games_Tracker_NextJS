@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useEffect } from 'react';
 import Avatar from '@mui/material/Avatar';
 import Image from 'next/image';
 import { useUser } from '@/contexts/UserContext';
@@ -15,14 +15,14 @@ const ProfileAvatar: React.FC<ProfileAvatarProps> = ({avatarUrl, size = 100}) =>
 
   return (
     <Avatar sx={{...styles.profileAvatar, width:size, height:size }}>
-      <div style={{ width: '100%', height: '100%', position: 'relative' }}>
+      <div >
         <Image
           src={imageUrl}
           alt={user?.username || 'User'}
           style={{objectFit:"cover"}}
-          fill
           quality={100}
-          sizes={`${size}px`}
+          width={size}
+          height={size}
         />
       </div>
     </Avatar>

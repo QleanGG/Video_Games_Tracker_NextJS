@@ -16,7 +16,7 @@ const updateProfile = async (formData: FormData): Promise<Profile> => {
   return data.profile;
 };
 
-export const useProfile = (isEnabled: boolean) => {
+export const useProfile = (isEnabled: boolean = true) => {
   return useQuery<ProfileResponse, Error>({
     queryKey: ['profile'],
     queryFn: fetchProfile,

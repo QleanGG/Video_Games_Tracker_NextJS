@@ -18,7 +18,7 @@ const NotFoundPage = () => {
       }}
     >
       <Image 
-        src="/404.png" 
+        src="/404.webp" 
         alt="404 Illustration" 
         width={300} 
         height={300} 

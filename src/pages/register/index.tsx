@@ -4,7 +4,6 @@ import { Box, TextField, Button, Typography, CircularProgress, Divider } from '@
 import { toast } from 'react-toastify';
 import { useRegister } from '@/hooks/useRegister';
 import styles from '@/styles/styles';
-import Image from 'next/image';
 import GoogleIcon from '@mui/icons-material/Google';
 
 const Register = () => {

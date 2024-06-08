@@ -2,6 +2,7 @@ import React, { createContext, useContext, useState, useEffect, ReactNode } from
 import { User } from '@/types';
 import mainApi from '@/api/apiAxios';
 import { useQueryClient } from '@tanstack/react-query';
+import nookies from 'nookies';
 
 interface UserContextType {
   user: User | null;
@@ -19,9 +20,9 @@ export const useUser = () => {
   return context;
 };
 
+const cookies = nookies.get();
 const hasSessionCookie = (): boolean => {
-  const cookies = document.cookie.split(';').map(cookie => cookie.trim());
-  return cookies.some(cookie => cookie.startsWith('connect.sid='));
+  return Boolean(cookies['connect.sid']);
 };
 
 
@@ -48,6 +49,7 @@ export const UserProvider = ({ children }: { children: ReactNode }) => {
     };
     fetchUser();
   }, []);
+
   
   return (
     <UserContext.Provider value={{ user, setUser, userLoading }}>

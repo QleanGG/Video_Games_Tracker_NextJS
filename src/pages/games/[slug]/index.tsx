@@ -1,6 +1,6 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { Game, GameStatus, UserGame } from '@/types'; 
-import { Box, Typography, Chip, CircularProgress, Button, Grid, styled } from '@mui/material';
+import { Box, Typography, Chip, CircularProgress, Button, Grid, styled, Skeleton } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useGame } from '@/hooks/useGame';
 import { useYouTubeVideos } from '@/hooks/useYoutubevideos';
@@ -51,7 +51,7 @@ const GamePage = ({ initialGameData }: GameProps) => {
 
 
   if (isLoadingGame) {
-    return <CircularProgress />;
+    return <Skeleton />;
   }
 
   if (gameError) {
@@ -112,7 +112,6 @@ const GamePage = ({ initialGameData }: GameProps) => {
             height={200}
             style={{ objectFit: 'contain' }}
             quality={100}
-            priority={true}
           />
         </Box>
       </Box>

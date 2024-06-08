@@ -36,6 +36,7 @@ const FeaturedGames: React.FC = () => {
                   style={{objectFit: "cover"}}
                   quality={100}
                   sizes="(max-width: 250px) 100vw, 50vw"
+                  loading='lazy'
                 />
               </Box>
             </CardMedia>

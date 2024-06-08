@@ -1,4 +1,4 @@
-// src/components/GameCard.tsx
+
 import React from 'react';
 import { Box, Typography, IconButton, Chip, Tooltip, styled } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
@@ -22,26 +22,12 @@ const StyledIconButton = styled(IconButton)(({ theme }) => ({
 	},
   }));
 
-const GameCard: React.FC<GameCardProps> = ({ game, userGames = [] }) => {
+const GameCard: React.FC<GameCardProps> = ({ game, userGames = [], onAddGame }) => {
   const router = useRouter();
   const { mutate: addUserGame } = useAddUserGame();
 
   const handleNavigate = (slug: string) => {
     router.push(`/games/${slug}`);
-  };
-
-  const handleAddGame = () => {
-    addUserGame(
-      { gameId: game.id, status: GameStatus.Interested},
-      {
-        onSuccess: () => {
-          toast.success('Game added successfully');
-        },
-        onError: () => {
-          toast.error('Failed to add game');
-        },
-      }
-    );
   };
 
   const isGameAdded = userGames.some((userGame) => userGame.game.id === game.id);
@@ -74,7 +60,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, userGames = [] }) => {
           <span>
             <StyledIconButton
               color="primary"
-              onClick={handleAddGame}
+              onClick={() => onAddGame(game.id)}
               disabled={isGameAdded}
             >
               {isGameAdded ? <CheckCircleOutlineIcon /> : <AddCircleOutlineIcon />}
