@@ -2,7 +2,7 @@
 import React, { useState, useEffect } from 'react';
 import { Box, TextField, Button, CircularProgress, Avatar, MenuItem, Select, InputLabel, FormControl, Checkbox, ListItemText, SelectChangeEvent } from '@mui/material';
 import { toast } from 'react-toastify';
-import { useUser } from '@/contexts/UserContext';
+import { useUser } from '@/hooks/useUser';
 import { useProfile, useUpdateProfile } from '@/hooks/useProfile';
 import { PlatformName, Platform } from '@/types';
 import styles from '@/styles/styles';
@@ -14,7 +14,6 @@ interface ProfileFormProps {
 }
 
 const ProfileForm: React.FC<ProfileFormProps> = ({ onCancel,avatarUrl }) => {
-  const { user } = useUser();
   const [selectedPlatforms, setSelectedPlatforms] = useState<PlatformName[]>([]);
   const { data, isPending: profilePending } = useProfile();
   const { mutate: updateProfile, isPending: updating } = useUpdateProfile();

@@ -1,35 +1,33 @@
 import { GetStaticPaths, GetStaticProps } from 'next';
 import { Game, GameStatus, UserGame } from '@/types'; 
-import { Box, Typography, Chip, CircularProgress, Button, Grid, styled, Skeleton } from '@mui/material';
+import { Box, Typography, Chip, Button, Grid, styled, Skeleton } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useGame } from '@/hooks/useGame';
-import { useYouTubeVideos } from '@/hooks/useYoutubevideos';
 import Image from 'next/image';
-import { fetchAllGames } from '@/services/fetchAllGames'; // Adjust the import path as necessary
+import { fetchAllGames } from '@/services/fetchAllGames'; 
 import axios from 'axios';
-import YouTubeVideo from '@/components/YoutubeVideo';
 import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
 import { toast } from 'react-toastify';
-import { useUser } from '@/contexts/UserContext';
+import { useUser } from '@/hooks/useUser';
+import YouTubeVideos from '@/components/youtube/YouTubeVideos'; 
 
 interface GameProps {
   initialGameData: Game;
 }
 
 const StyledButton = styled(Button)(({ theme }) => ({
-	'&.Mui-disabled': {
-	  color: '#A63446',
-	},
-  }));
+  '&.Mui-disabled': {
+    color: '#A63446',
+  },
+}));
 
 const GamePage = ({ initialGameData }: GameProps) => {
   const router = useRouter();
   const { slug } = router.query as { slug: string };
-  const { user, setUser, userLoading } = useUser();
-  const { data: game, isLoading: isLoadingGame, error: gameError } = useGame(slug);
+  const { data: user } = useUser();
+  const { data: game = initialGameData, isLoading: isLoadingGame, error: gameError } = useGame(slug, initialGameData);
   const { data: userGames, isLoading: isUserGamesLoading } = useUserGames(!!user);
   const { mutate: addUserGame, isPending: isAdding } = useAddUserGame();
-  const { data: videos, isLoading: isLoadingVideos, error: videoError } = useYouTubeVideos(game ? game.title : '');
 
   const handleAddGame = () => {
     if (game) {
@@ -49,9 +47,19 @@ const GamePage = ({ initialGameData }: GameProps) => {
 
   const isGameAdded = userGames?.some((userGame: UserGame) => userGame.game.id === game?.id);
 
-
   if (isLoadingGame) {
-    return <Skeleton />;
+    return (
+      <Box sx={{ p: 4 }}>
+        <Skeleton variant="rectangular" width="100%" height={40} />
+        <Skeleton variant="rectangular" width="100%" height={200} sx={{ my: 2 }} />
+        <Skeleton variant="rectangular" width="60%" height={30} />
+        <Skeleton variant="rectangular" width="40%" height={30} sx={{ mt: 1 }} />
+        <Skeleton variant="rectangular" width="100%" height={300} sx={{ my: 2 }} />
+        <Skeleton variant="rectangular" width="60%" height={30} />
+        <Skeleton variant="rectangular" width="100%" height={50} sx={{ my: 2 }} />
+        <Skeleton variant="rectangular" width="100%" height={300} />
+      </Box>
+    );
   }
 
   if (gameError) {
@@ -61,9 +69,6 @@ const GamePage = ({ initialGameData }: GameProps) => {
   if (!game) {
     return <Typography>No game data available</Typography>;
   }
-
-  const mainVideo = videos?.[0];
-  const suggestedVideos = videos?.slice(1, 3);
 
   return (
     <Box sx={{ p: 4 }}>
@@ -117,39 +122,7 @@ const GamePage = ({ initialGameData }: GameProps) => {
       </Box>
 
       <Box sx={{ mb: 4 }}>
-        {isLoadingVideos ? (
-          <CircularProgress />
-        ) : videoError ? (
-          <Typography color="error">Error fetching videos</Typography>
-        ) : (
-          mainVideo && (
-            <YouTubeVideo
-              key={mainVideo.id.videoId}
-              videoId={mainVideo.id.videoId}
-              title={mainVideo.snippet.title}
-            />
-          )
-        )}
-      </Box>
-
-      <Box sx={{ mt: 4 }}>
-        <Typography variant="h6">Suggested Videos</Typography>
-        {isLoadingVideos ? (
-          <CircularProgress />
-        ) : videoError ? (
-          <Typography color="error">Error fetching videos</Typography>
-        ) : (
-          <Box sx={{ display: 'flex', gap: 10 }}>
-            {suggestedVideos?.map((video) => (
-              <Box key={video.id.videoId} sx={{ width: '50%' }}>
-                <YouTubeVideo
-                  videoId={video.id.videoId}
-                  title={video.snippet.title}
-                />
-              </Box>
-            ))}
-          </Box>
-        )}
+        <YouTubeVideos gameTitle={game.title} />
       </Box>
     </Box>
   );

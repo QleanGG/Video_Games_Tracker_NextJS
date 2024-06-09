@@ -1,31 +1,26 @@
 // pages/profile.tsx
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, CircularProgress, Button, Avatar, Grid, Paper } from '@mui/material';
+import { Box, Typography, CircularProgress, Button, Avatar, Grid, Paper, Skeleton } from '@mui/material';
 import { useRouter } from 'next/router';
-import { useUser } from '@/contexts/UserContext';
+import { useUser } from '@/hooks/useUser';
 import ProfileForm from '@/components/profile/ProfileForm';
 import styles from '@/styles/styles';
-import mainApi from '@/api/apiAxios';
 import { useProfile } from '@/hooks/useProfile';
 import ProfileAvatar from '@/components/profile/ProfileAvatar';
+import { useGlobalLogout } from '@/utils/authUtils';
 
 const ProfilePage: React.FC = () => {
-  const { user, setUser, userLoading } = useUser();
+  const { data: user, isLoading: userLoading } = useUser();
   const router = useRouter();
   const { data, isPending: profilePending } = useProfile(!!user);
   const [editMode, setEditMode] = useState(false);
+  const { logout } = useGlobalLogout();
 
   useEffect(() => {
     if (!userLoading && !user) {
       router.push('/login');
     }
   }, [user, userLoading, router]);
-
-  const handleLogout = async () => {
-    await mainApi.get('/auth/logout');
-    setUser(null);
-    router.push('/login');
-  };
 
   const handleEditClick = () => {
     setEditMode(true);
@@ -38,7 +33,7 @@ const ProfilePage: React.FC = () => {
   if (profilePending || userLoading) {
     return (
       <Box sx={{ display: 'flex', justifyContent: 'center', alignItems: 'center', height: '100vh' }}>
-        <CircularProgress />
+        <Skeleton variant="rectangular" width="100%" height="100%" />
       </Box>
     );
   }
@@ -94,7 +89,7 @@ const ProfilePage: React.FC = () => {
             <Button variant="contained" color="primary" onClick={handleEditClick} sx={{ width: '100%' }}>Edit Profile</Button>
           </Grid>
           <Grid item xs={12}>
-            <Button variant="contained" color="secondary" onClick={handleLogout} sx={{ width: '100%' }}>Logout</Button>
+            <Button variant="contained" color="secondary" onClick={logout} sx={{ width: '100%' }}>Logout</Button>
           </Grid>
         </Grid>
       )}

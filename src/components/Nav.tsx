@@ -1,29 +1,19 @@
 // components/Nav.tsx
 import React, { useState, useEffect } from 'react';
-import {
-	AppBar,
-	Toolbar,
-	Button,
-	Box,
-	Container,
-	IconButton,
-	Menu,
-	MenuItem,
-	CircularProgress,
-} from '@mui/material';
+import {AppBar, Toolbar, Button, Box, Container, IconButton, Menu, MenuItem, Skeleton} from '@mui/material';
 import Link from 'next/link';
 import Image from 'next/image';
-import { useUser } from '@/contexts/UserContext';
-import { useRouter } from 'next/router';
+import { useUser } from '@/hooks/useUser';
 import ProfileAvatar from '@/components/profile/ProfileAvatar';
-import { logout } from '@/services/authService';
 import { useProfile } from '@/hooks/useProfile';
+import LoadingNav from './nav/LoadingNav';
+import { useGlobalLogout } from '@/utils/authUtils';
 
 const Nav = () => {
-	const { user, setUser, userLoading } = useUser();
+	const { data: user, isLoading: userLoading, refetch } = useUser();
 	const { data: profileData, isLoading: profileLoading } = useProfile(!!user);
 	const [profileImage, setProfileImage] = useState<string | null>(null);
-	const router = useRouter();
+	const { logout } = useGlobalLogout();
 	const [anchorEl, setAnchorEl] = useState<null | HTMLElement>(null);
 
 	useEffect(() => {
@@ -40,23 +30,8 @@ const Nav = () => {
 		setAnchorEl(null);
 	};
 
-	const handleLogout = async () => {
-		await logout();
-		setUser(null);
-		setAnchorEl(null);
-		await router.push('/login');
-	};
-
 	if (userLoading) {
-		return (
-			<AppBar position="static" sx={{ bgcolor: 'primary.main' }}>
-				<Container maxWidth="lg">
-					<Toolbar sx={{ justifyContent: 'space-between' }}>
-						<CircularProgress size={24} />
-					</Toolbar>
-				</Container>
-			</AppBar>
-		);
+		return <LoadingNav />;
 	}
 
 	return (
@@ -64,7 +39,7 @@ const Nav = () => {
 			<Container maxWidth="lg">
 				<Toolbar sx={{ justifyContent: 'space-between' }}>
 					<Box sx={{ display: 'flex', alignItems: 'center' }}>
-						<Link href="/">
+						<Link href="/" passHref>
 							<Box
 								sx={{
 									display: 'flex',
@@ -81,21 +56,11 @@ const Nav = () => {
 								/>
 							</Box>
 						</Link>
-						<Box sx={{ ml: 2, display: 'flex', gap: 2 }}>
-							<Link href="/">
-								<Button sx={{ color: 'text.primary' }}>Home</Button>
-							</Link>
-							<Link href="/games">
-								<Button sx={{ color: 'text.primary' }}>Games</Button>
-							</Link>
-							<Link href="/platforms">
-								<Button sx={{ color: 'text.primary' }}>Platforms</Button>
-							</Link>
-						</Box>
+						<NavLinks />
 					</Box>
 					<Box sx={{ display: 'flex', alignItems: 'center', gap: 2 }}>
 						{profileLoading ? (
-							<CircularProgress size={24} />
+							<Skeleton variant="circular" width={40} height={40} />
 						) : user ? (
 							<>
 								<IconButton
@@ -110,49 +75,18 @@ const Nav = () => {
 								>
 									<ProfileAvatar avatarUrl={profileImage || ''} size={40} />
 								</IconButton>
-								<Menu
+								<ProfileMenu
 									anchorEl={anchorEl}
-									open={Boolean(anchorEl)}
-									onClose={handleMenuClose}
-									anchorOrigin={{
-										vertical: 'bottom',
-										horizontal: 'center',
-									}}
-									transformOrigin={{
-										vertical: 'top',
-										horizontal: 'center',
-									}}
-									sx={{ animation: 'fadeIn 0.3s' }}
-								>
-									<MenuItem onClick={handleMenuClose}>
-										<Link href="/dashboard">
-											<Box
-												component="a"
-												sx={{ textDecoration: 'none', color: '#FBFEF9' }}
-											>
-												Dashboard
-											</Box>
-										</Link>
-									</MenuItem>
-									<MenuItem onClick={handleMenuClose}>
-										<Link href="/profile">
-											<Box
-												component="a"
-												sx={{ textDecoration: 'none', color: '#FBFEF9' }}
-											>
-												Profile
-											</Box>
-										</Link>
-									</MenuItem>
-									<MenuItem onClick={handleLogout}>Logout</MenuItem>
-								</Menu>
+									handleMenuClose={handleMenuClose}
+									handleLogout={logout}
+								/>
 							</>
 						) : (
 							<>
-								<Link href="/login">
+								<Link href="/login" passHref>
 									<Button sx={{ color: 'text.primary' }}>Login</Button>
 								</Link>
-								<Link href="/register">
+								<Link href="/register" passHref>
 									<Button sx={{ color: 'text.primary' }}>Register</Button>
 								</Link>
 							</>
@@ -163,5 +97,54 @@ const Nav = () => {
 		</AppBar>
 	);
 };
+
+const NavLinks = () => (
+	<Box sx={{ ml: 2, display: 'flex', gap: 2 }}>
+		<Link href="/" passHref>
+			<Button sx={{ color: 'text.primary' }}>Home</Button>
+		</Link>
+		<Link href="/games" passHref>
+			<Button sx={{ color: 'text.primary' }}>Games</Button>
+		</Link>
+		<Link href="/platforms" passHref>
+			<Button sx={{ color: 'text.primary' }}>Platforms</Button>
+		</Link>
+	</Box>
+);
+
+interface ProfileMenuProps {
+	anchorEl: HTMLElement | null;
+	handleMenuClose: () => void;
+	handleLogout: () => void;
+}
+
+const ProfileMenu: React.FC<ProfileMenuProps> = ({ anchorEl, handleMenuClose, handleLogout }) => (
+	<Menu
+		anchorEl={anchorEl}
+		open={Boolean(anchorEl)}
+		onClose={handleMenuClose}
+		anchorOrigin={{
+			vertical: 'bottom',
+			horizontal: 'center',
+		}}
+		transformOrigin={{
+			vertical: 'top',
+			horizontal: 'center',
+		}}
+		sx={{ animation: 'fadeIn 0.3s' }}
+	>
+		<MenuItem onClick={handleMenuClose}>
+			<Link href="/dashboard" passHref>
+				<Box sx={{ textDecoration: 'none', color: '#FBFEF9' }}>Dashboard</Box>
+			</Link>
+		</MenuItem>
+		<MenuItem onClick={handleMenuClose}>
+			<Link href="/profile" passHref>
+				<Box sx={{ textDecoration: 'none', color: '#FBFEF9' }}>Profile</Box>
+			</Link>
+		</MenuItem>
+		<MenuItem onClick={handleLogout}>Logout</MenuItem>
+	</Menu>
+);
 
 export default Nav;

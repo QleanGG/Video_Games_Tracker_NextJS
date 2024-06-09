@@ -1,59 +1,59 @@
-import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
-import { User } from '@/types';
-import mainApi from '@/api/apiAxios';
-import { useQueryClient } from '@tanstack/react-query';
-import nookies from 'nookies';
+// import React, { createContext, useContext, useState, useEffect, ReactNode } from 'react';
+// import { User } from '@/types';
+// import mainApi from '@/api/apiAxios';
+// import { useQueryClient } from '@tanstack/react-query';
+// import nookies from 'nookies';
 
-interface UserContextType {
-  user: User | null;
-  setUser: (user: User | null) => void;
-  userLoading: boolean;
-}
+// interface UserContextType {
+//   user: User | null;
+//   setUser: (user: User | null) => void;
+//   userLoading: boolean;
+// }
 
-const UserContext = createContext<UserContextType | undefined>(undefined);
+// const UserContext = createContext<UserContextType | undefined>(undefined);
 
-export const useUser = () => {
-  const context = useContext(UserContext);
-  if (!context) {
-    throw new Error('useUser must be used within a UserProvider');
-  }
-  return context;
-};
+// export const useUser = () => {
+//   const context = useContext(UserContext);
+//   if (!context) {
+//     throw new Error('useUser must be used within a UserProvider');
+//   }
+//   return context;
+// };
 
-const cookies = nookies.get();
-const hasSessionCookie = (): boolean => {
-  return Boolean(cookies['connect.sid']);
-};
+// const cookies = nookies.get();
+// const hasSessionCookie = (): boolean => {
+//   return Boolean(cookies['connect.sid']);
+// };
 
 
-export const UserProvider = ({ children }: { children: ReactNode }) => {
-  const [user, setUser] = useState<User | null>(null);
-  const [userLoading, setUserLoading] = useState(true);
-  const queryClient = useQueryClient();
+// export const UserProvider = ({ children }: { children: ReactNode }) => {
+//   const [user, setUser] = useState<User | null>(null);
+//   const [userLoading, setUserLoading] = useState(true);
+//   const queryClient = useQueryClient();
 
-  useEffect(() => {
-    const fetchUser = async () => {
-      if (!hasSessionCookie()) {
-        setUserLoading(false);
-        return;
-      }
+//   useEffect(() => {
+//     const fetchUser = async () => {
+//       if (!hasSessionCookie()) {
+//         setUserLoading(false);
+//         return;
+//       }
 
-      try {
-        const { data } = await mainApi.get<User>('/auth/user');
-        setUser(data);
-      } catch (error) {
-        setUser(null);
-      } finally {
-        setUserLoading(false);
-      }
-    };
-    fetchUser();
-  }, []);
+//       try {
+//         const { data } = await mainApi.get<User>('/auth/user');
+//         setUser(data);
+//       } catch (error) {
+//         setUser(null);
+//       } finally {
+//         setUserLoading(false);
+//       }
+//     };
+//     fetchUser();
+//   }, []);
 
   
-  return (
-    <UserContext.Provider value={{ user, setUser, userLoading }}>
-      {children}
-    </UserContext.Provider>
-  );
-};
+//   return (
+//     <UserContext.Provider value={{ user, setUser, userLoading }}>
+//       {children}
+//     </UserContext.Provider>
+//   );
+// };

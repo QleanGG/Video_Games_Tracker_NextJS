@@ -1,18 +1,18 @@
-import { useState, ChangeEvent, useEffect } from 'react';
+import { useState, ChangeEvent } from 'react';
 import { Box, Container, Grid, TextField, Typography, Button, Skeleton } from '@mui/material';
 import { useAllGames } from '../../hooks/useAllGames';
 import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
 import GameCard from '@/components/cards/GameCard';
 import { GameStatus } from '@/types';
 import { toast } from 'react-toastify';
-import { useUser } from '@/contexts/UserContext';
+import { useUser } from '@/hooks/useUser';
 import { useRouter } from 'next/router';
 
 const GamesPage = () => {
   const [page, setPage] = useState(1);
   const [search, setSearch] = useState('');
   const { data: allGamesData, error, isLoading: isAllGamesLoading } = useAllGames(page, 12, search);
-  const { user } = useUser();
+  const { data: user } = useUser();
   const { data: userGames, isLoading: isUserGamesLoading } = useUserGames(!!user); 
   const { mutate: addUserGame, isPending: isAdding } = useAddUserGame();
   const router = useRouter();

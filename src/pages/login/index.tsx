@@ -1,13 +1,14 @@
-import { useState } from 'react';
-import { Box, TextField, Button, Typography, CircularProgress, Divider } from '@mui/material';
+import { useEffect, useState } from 'react';
+import { Box, TextField, Button, Typography, Divider, Skeleton } from '@mui/material';
 import GoogleIcon from '@mui/icons-material/Google';
 import { useLogin } from '@/hooks/useLogin';
 import styles from '@/styles/styles';
+import { toast } from 'react-toastify';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-  const { mutate, isPending } = useLogin();
+  const { mutate, isPending, isError, error } = useLogin();
 
   const handleSubmit = (event: React.FormEvent) => {
     event.preventDefault();
@@ -17,6 +18,13 @@ const Login = () => {
   const handleGoogleLogin = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google`;
   };
+
+  useEffect(() => {
+    if (isError) {
+      toast.error(error.message);
+    }
+  }, [isError, error]);
+
 
   return (
     <Box sx={styles.formContainer}>
@@ -44,7 +52,7 @@ const Login = () => {
           sx={styles.formField}
         />
         <Button type="submit" variant="contained" color="primary" fullWidth sx={styles.submitButton} disabled={isPending}>
-          {isPending ? <CircularProgress size={24} color="inherit" /> : 'Login'}
+        {isPending ? <Skeleton width={24} height={24} /> : 'Login'}
         </Button>
       </form>
       <Divider sx={{ my: 2 }}>OR</Divider>

@@ -1,15 +1,18 @@
 import { ReactNode } from 'react';
 import { Box, Container } from '@mui/material';
-import Nav from './Nav';
-import Footer from './Footer';
+import dynamic from 'next/dynamic';
+import { text } from 'stream/consumers';
 
-interface LayoutProps {
+const Nav = dynamic(() => import('./Nav'), { ssr: false });
+const Footer = dynamic(() => import('./Footer'), { ssr: false });
+
+interface Props {
   children: ReactNode;
 }
 
-const Layout = ({ children }: LayoutProps) => {
+const Layout = ({ children }: Props) => {
   return (
-    <Box sx={{ bgcolor: 'background.default', color: 'text.primary', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
+    <Box color={'text.primary'} sx={{ bgcolor: 'background.default', color: 'text.primary', minHeight: '100vh', display: 'flex', flexDirection: 'column' }}>
       <Nav />
       <Container maxWidth="lg" sx={{ flexGrow: 1, py: 2 }}>
         {children}
