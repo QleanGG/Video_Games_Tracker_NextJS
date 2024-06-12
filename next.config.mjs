@@ -17,6 +17,16 @@ const nextConfig = {
         port: '3000',
         pathname: '/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'game-vault-express.onrender.com',
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'game-vault-express.onrender.com',
+        pathname: '/uploads/**',
+      },
     ],
   },
 };
