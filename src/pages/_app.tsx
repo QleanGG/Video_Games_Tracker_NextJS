@@ -9,6 +9,7 @@ import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 // import { UserProvider } from '@/contexts/UserContext';
 import { Analytics } from '@vercel/analytics/react';
+import { SpeedInsights } from '@vercel/speed-insights/next';
 
 const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {
@@ -20,6 +21,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 					<Layout>
 						<Component {...pageProps} />
 					</Layout>
+					<SpeedInsights />
 					<Analytics />
 			</ThemeProvider>
 		</QueryClientProvider>
