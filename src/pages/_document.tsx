@@ -26,6 +26,7 @@ class MyDocument extends Document {
 						href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap"
 						rel="stylesheet"
 					/>
+					<link rel='preconeect' href='https://game-vault-express.onrender.com' />
 					<link rel="icon" href="/favicon.ico" />
 				</Head>
 				<body>

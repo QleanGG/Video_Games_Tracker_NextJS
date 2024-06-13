@@ -5,6 +5,7 @@ import { toast } from 'react-toastify';
 import { useRegister } from '@/hooks/useRegister';
 import styles from '@/styles/styles';
 import GoogleIcon from '@mui/icons-material/Google';
+import { GetStaticProps } from 'next';
 
 const Register = () => {
   const [email, setEmail] = useState('');
@@ -104,6 +105,12 @@ const Register = () => {
       </Button>
     </Box>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {}, 
+  };
 };
 
 export default Register;

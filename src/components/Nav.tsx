@@ -103,6 +103,9 @@ const NavLinks = () => (
 		<Link href="/" passHref>
 			<Button sx={{ color: 'text.primary' }}>Home</Button>
 		</Link>
+		<Link href="/about" passHref>
+			<Button sx={{ color: 'text.primary' }}>About Us</Button>
+		</Link>
 		<Link href="/games" passHref>
 			<Button sx={{ color: 'text.primary' }}>Games</Button>
 		</Link>

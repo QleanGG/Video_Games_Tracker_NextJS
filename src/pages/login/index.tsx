@@ -4,6 +4,7 @@ import GoogleIcon from '@mui/icons-material/Google';
 import { useLogin } from '@/hooks/useLogin';
 import styles from '@/styles/styles';
 import { toast } from 'react-toastify';
+import { GetStaticProps } from 'next';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -68,6 +69,12 @@ const Login = () => {
       </Button>
     </Box>
   );
+};
+
+export const getStaticProps: GetStaticProps = async () => {
+  return {
+    props: {}, 
+  };
 };
 
 export default Login;

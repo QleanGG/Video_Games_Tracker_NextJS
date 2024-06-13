@@ -84,12 +84,19 @@ const styles = {
 	  textAlign: 'left' as const,
 	},
 	footer: {
-	  bgcolor: 'primary.main',
-	  color: 'text.primary',
-	  p: 2,
-	  mt: 'auto',
-	  width: '100%',
-	},
+		bgcolor: 'primary.main',
+		color: 'text.primary',
+		p: 2,
+		mt: 'auto',
+		width: '100%',
+	  },
+	  footerLink: {
+		color: 'text.primary',
+		ml: 1, // Add margin for spacing
+		'&:hover': {
+		  textDecoration: 'underline',
+		},
+	  },
 	formContainer: {
 	  maxWidth: 400,
 	  mx: 'auto',
