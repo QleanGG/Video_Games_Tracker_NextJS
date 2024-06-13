@@ -5,18 +5,18 @@ const nextConfig = {
   distDir: 'dist',  
   images: {
     remotePatterns: [
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3000',
-        pathname: '/**',
-      },
-      {
-        protocol: 'http',
-        hostname: 'localhost',
-        port: '3000',
-        pathname: '/uploads/**',
-      },
+      // {
+      //   protocol: 'http',
+      //   hostname: 'localhost',
+      //   port: '3000',
+      //   pathname: '/**',
+      // },
+      // {
+      //   protocol: 'http',
+      //   hostname: 'localhost',
+      //   port: '3000',
+      //   pathname: '/uploads/**',
+      // },
       {
         protocol: 'https',
         hostname: 'game-vault-express.onrender.com',
@@ -32,7 +32,7 @@ const nextConfig = {
 };
 
 const bundleAnalyzerConfig = {
-  enabled: process.env.ANALYZE === 'true',
+  enabled: process.env.ANALYZE === 'false',
 };
 
 export default withBundleAnalyzer(bundleAnalyzerConfig)(nextConfig);
