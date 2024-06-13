@@ -146,7 +146,7 @@ const ProfileMenu: React.FC<ProfileMenuProps> = ({ anchorEl, handleMenuClose, ha
 				<Box sx={{ textDecoration: 'none', color: '#FBFEF9' }}>Profile</Box>
 			</Link>
 		</MenuItem>
-		<MenuItem onClick={handleLogout}>Logout</MenuItem>
+		<MenuItem onClick={() => {handleLogout(); handleMenuClose()}}>Logout</MenuItem>
 	</Menu>
 );
 

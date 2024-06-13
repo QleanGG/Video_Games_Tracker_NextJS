@@ -22,7 +22,7 @@ function MyApp({ Component, pageProps }: AppProps) {
 						<Component {...pageProps} />
 					</Layout>
 					<SpeedInsights />
-					<Analytics />
+					<Analytics /> 
 			</ThemeProvider>
 		</QueryClientProvider>
 	);
