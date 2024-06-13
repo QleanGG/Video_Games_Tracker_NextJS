@@ -2,7 +2,6 @@ import withBundleAnalyzer from '@next/bundle-analyzer';
 
 const nextConfig = {
   reactStrictMode: true,
-  distDir: 'dist',  
   images: {
     remotePatterns: [
       // {
