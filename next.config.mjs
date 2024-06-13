@@ -1,5 +1,5 @@
 import withBundleAnalyzer from '@next/bundle-analyzer';
-import { withSpeedInsights } from '@vercel/speed-insights';
+import { SpeedInsights } from "@vercel/speed-insights/next"
 
 const nextConfig = {
   reactStrictMode: true,
@@ -35,6 +35,6 @@ const bundleAnalyzerConfig = {
   enabled: process.env.ANALYZE === 'false',
 };
 
-export default withSpeedInsights(
+export default SpeedInsights(
   withBundleAnalyzer(bundleAnalyzerConfig)(nextConfig)
 );
