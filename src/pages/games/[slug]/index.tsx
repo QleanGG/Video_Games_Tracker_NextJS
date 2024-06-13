@@ -5,11 +5,12 @@ import { useRouter } from 'next/router';
 import { useGame } from '@/hooks/useGame';
 import Image from 'next/image';
 import { fetchAllGames } from '@/services/fetchAllGames'; 
-import axios from 'axios';
 import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
 import { toast } from 'react-toastify';
 import { useUser } from '@/hooks/useUser';
 import YouTubeVideos from '@/components/youtube/YouTubeVideos'; 
+import mainApi from '@/api/apiAxios';
+import axios from 'axios';
 
 interface GameProps {
   initialGameData: Game;
@@ -142,7 +143,7 @@ export const getStaticProps: GetStaticProps = async (context) => {
   const { slug } = context.params as { slug: string };
 
   try {
-    const { data } = await axios.get<Game>(`${process.env.NEXT_PUBLIC_BACKEND_URL}/api/games/${slug}`);
+    const { data } = await mainApi.get<Game>(`/games/${slug}`);
     return {
       props: { initialGameData: data },
     };
