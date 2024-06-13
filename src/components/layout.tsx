@@ -1,7 +1,7 @@
 import { ReactNode } from 'react';
 import { Box, Container } from '@mui/material';
 import dynamic from 'next/dynamic';
-import { text } from 'stream/consumers';
+
 
 const Nav = dynamic(() => import('./Nav'), { ssr: false });
 const Footer = dynamic(() => import('./Footer'), { ssr: false });
