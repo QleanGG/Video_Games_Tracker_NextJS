@@ -10,6 +10,8 @@ import 'react-toastify/dist/ReactToastify.css';
 // import { UserProvider } from '@/contexts/UserContext';
 import { Analytics } from '@vercel/analytics/react';
 import { SpeedInsights } from '@vercel/speed-insights/next';
+import "slick-carousel/slick/slick.css"; 
+import "slick-carousel/slick/slick-theme.css";
 
 const queryClient = new QueryClient();
 function MyApp({ Component, pageProps }: AppProps) {

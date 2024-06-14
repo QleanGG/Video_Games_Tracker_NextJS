@@ -1,0 +1,18 @@
+/* Ensure slides are centered */
+.slick-slide {
+    display: flex !important;
+    justify-content: center !important;
+  }
+  
+  /* Override the default width of the slides */
+  .slick-slide > div {
+    width: auto !important;
+  }
+  
+  /* Custom styles for arrows */
+  .arrow {
+    display: block;
+    background: #A63446;
+    border-radius: 50%;
+    z-index: 1;
+  }
