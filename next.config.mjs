@@ -27,6 +27,16 @@ const nextConfig = {
         hostname: 'game-vault-express.onrender.com',
         pathname: '/uploads/**',
       },
+      {
+        protocol: 'https',
+        hostname: 'api.gamevault.live', 
+        pathname: '/**',
+      },
+      {
+        protocol: 'https',
+        hostname: 'api.gamevault.live',
+        pathname: '/uploads/**',
+      },
     ],
   },
 };

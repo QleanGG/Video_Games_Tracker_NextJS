@@ -6,10 +6,13 @@ import axios from 'axios';
 
 const fetchUser = async (): Promise<User | null> => {
   try {
-    const { data } = await mainApi.get<User>('/auth/user');
-    return data;
+    const response = await mainApi.get<User>('/auth/user');
+    if (response.status === 401) {
+      return null
+    }
+    return response.data;
   } catch (error) {
-    if (axios.isAxiosError(error) && error.response?.status === 403) {
+    if (axios.isAxiosError(error) && error.response?.status === 401) {
       return null;
     }
     throw error; // Re-throw if it's not a 403 error
