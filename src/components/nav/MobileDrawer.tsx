@@ -1,12 +1,12 @@
 import React from 'react';
-import { Drawer, List, ListItemButton, ListItemText, ListItemIcon, Box, Divider, Typography } from '@mui/material';
+import { Drawer, List, ListItemButton, ListItemText, ListItemIcon, Box, Divider, Typography, Link as MuiLink } from '@mui/material';
 import HomeIcon from '@mui/icons-material/Home';
 import InfoIcon from '@mui/icons-material/Info';
 import GamepadIcon from '@mui/icons-material/Gamepad';
 import DevicesIcon from '@mui/icons-material/Devices';
 import AccountCircleIcon from '@mui/icons-material/AccountCircle';
 import ExitToAppIcon from '@mui/icons-material/ExitToApp';
-import Link from 'next/link';
+import NextLink from 'next/link';
 
 interface MobileDrawerProps {
 	drawerOpen: boolean;
@@ -23,55 +23,67 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({ drawerOpen, toggleDrawer, u
 		>
 			<List>
 				<ListItemButton onClick={handleMenuClose}>
-					<Link href="/" passHref>
-						<ListItemIcon>
-							<HomeIcon />
-						</ListItemIcon>
-						<ListItemText primary="Home" />
-					</Link>
+					<NextLink href="/" passHref>
+						<MuiLink sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', '&:hover': { color: 'white' } }}>
+							<ListItemIcon>
+								<HomeIcon />
+							</ListItemIcon>
+							<ListItemText primary="Home" />
+						</MuiLink>
+					</NextLink>
 				</ListItemButton>
 				<ListItemButton onClick={handleMenuClose}>
-					<Link href="/about" passHref>
-						<ListItemIcon>
-							<InfoIcon />
-						</ListItemIcon>
-						<ListItemText primary="About Us" />
-					</Link>
+					<NextLink href="/about" passHref>
+						<MuiLink sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', '&:hover': { color: 'white' } }}>
+							<ListItemIcon>
+								<InfoIcon />
+							</ListItemIcon>
+							<ListItemText primary="About Us" />
+						</MuiLink>
+					</NextLink>
 				</ListItemButton>
 				<ListItemButton onClick={handleMenuClose}>
-					<Link href="/games" passHref>
-						<ListItemIcon>
-							<GamepadIcon />
-						</ListItemIcon>
-						<ListItemText primary="Games" />
-					</Link>
+					<NextLink href="/games" passHref>
+						<MuiLink sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', '&:hover': { color: 'white' }  }}>
+							<ListItemIcon>
+								<GamepadIcon />
+							</ListItemIcon>
+							<ListItemText primary="Games" />
+						</MuiLink>
+					</NextLink>
 				</ListItemButton>
 				<ListItemButton onClick={handleMenuClose}>
-					<Link href="/platforms" passHref>
-						<ListItemIcon>
-							<DevicesIcon />
-						</ListItemIcon>
-						<ListItemText primary="Platforms" />
-					</Link>
+					<NextLink href="/platforms" passHref>
+						<MuiLink sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', '&:hover': { color: 'white' } }}>
+							<ListItemIcon>
+								<DevicesIcon />
+							</ListItemIcon>
+							<ListItemText primary="Platforms" />
+						</MuiLink>
+					</NextLink>
 				</ListItemButton>
 				<Divider />
 				{user ? (
 					<>
 						<ListItemButton onClick={handleMenuClose}>
-							<Link href="/dashboard" passHref>
-								<ListItemIcon>
-									<AccountCircleIcon />
-								</ListItemIcon>
-								<ListItemText primary="Dashboard" />
-							</Link>
+							<NextLink href="/dashboard" passHref>
+								<MuiLink sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', '&:hover': { color: 'white' } }}>
+									<ListItemIcon>
+										<AccountCircleIcon />
+									</ListItemIcon>
+									<ListItemText primary="Dashboard" />
+								</MuiLink>
+							</NextLink>
 						</ListItemButton>
 						<ListItemButton onClick={handleMenuClose}>
-							<Link href="/profile" passHref>
-								<ListItemIcon>
-									<AccountCircleIcon />
-								</ListItemIcon>
-								<ListItemText primary="Profile" />
-							</Link>
+							<NextLink href="/profile" passHref>
+								<MuiLink sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', '&:hover': { color: 'white' } }}>
+									<ListItemIcon>
+										<AccountCircleIcon />
+									</ListItemIcon>
+									<ListItemText primary="Profile" />
+								</MuiLink>
+							</NextLink>
 						</ListItemButton>
 						<ListItemButton onClick={() => { handleLogout(); handleMenuClose(); }}>
 							<ListItemIcon>
@@ -83,20 +95,24 @@ const MobileDrawer: React.FC<MobileDrawerProps> = ({ drawerOpen, toggleDrawer, u
 				) : (
 					<>
 						<ListItemButton onClick={handleMenuClose}>
-							<Link href="/login" passHref>
-								<ListItemIcon>
-									<ExitToAppIcon />
-								</ListItemIcon>
-								<ListItemText primary="Login" />
-							</Link>
+							<NextLink href="/login" passHref>
+								<MuiLink sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', '&:hover': { color: 'white' } }}>
+									<ListItemIcon>
+										<ExitToAppIcon />
+									</ListItemIcon>
+									<ListItemText primary="Login" />
+								</MuiLink>
+							</NextLink>
 						</ListItemButton>
 						<ListItemButton onClick={handleMenuClose}>
-							<Link href="/register" passHref>
-								<ListItemIcon>
-									<ExitToAppIcon />
-								</ListItemIcon>
-								<ListItemText primary="Register" />
-							</Link>
+							<NextLink href="/register" passHref>
+								<MuiLink sx={{ display: 'flex', alignItems: 'center', textDecoration: 'none', color: 'white', '&:hover': { color: 'white' } }}>
+									<ListItemIcon>
+										<ExitToAppIcon />
+									</ListItemIcon>
+									<ListItemText primary="Register" />
+								</MuiLink>
+							</NextLink>
 						</ListItemButton>
 					</>
 				)}

@@ -1,5 +1,14 @@
 import React, { useState, useEffect } from 'react';
-import { AppBar, Toolbar, Button, Box, Container, IconButton, Skeleton, Hidden } from '@mui/material';
+import {
+	AppBar,
+	Toolbar,
+	Button,
+	Box,
+	Container,
+	IconButton,
+	Skeleton,
+	Hidden,
+} from '@mui/material';
 import MenuIcon from '@mui/icons-material/Menu';
 import Link from 'next/link';
 import Image from 'next/image';
@@ -67,9 +76,11 @@ const Nav = () => {
 							<Skeleton variant="circular" width={40} height={40} />
 						) : user ? (
 							<>
-								<IconButton onClick={handleMenuOpen} sx={{ p: 0, position: 'relative', top: 5 }}>
-									<ProfileAvatar avatarUrl={profileImage || ''} size={40} />
-								</IconButton>
+								<Hidden mdDown>
+									<IconButton onClick={handleMenuOpen} sx={{ p: 0, position: 'relative', top: 5 }}>
+										<ProfileAvatar avatarUrl={profileImage || ''} size={40} />
+									</IconButton>
+								</Hidden>
 								<ProfileMenu
 									anchorEl={anchorEl}
 									handleMenuClose={handleMenuClose}
@@ -89,7 +100,12 @@ const Nav = () => {
 							</Hidden>
 						)}
 						<Hidden mdUp>
-							<IconButton edge="start" color="inherit" aria-label="menu" onClick={toggleDrawer(true)}>
+							<IconButton
+								edge="start"
+								color="inherit"
+								aria-label="menu"
+								onClick={toggleDrawer(true)}
+							>
 								<MenuIcon />
 							</IconButton>
 							<MobileDrawer
