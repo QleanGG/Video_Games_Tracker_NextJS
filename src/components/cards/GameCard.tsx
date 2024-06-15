@@ -1,13 +1,10 @@
-
 import React from 'react';
 import { Box, Typography, IconButton, Chip, Tooltip, styled } from '@mui/material';
 import AddCircleOutlineIcon from '@mui/icons-material/AddCircleOutline';
 import CheckCircleOutlineIcon from '@mui/icons-material/CheckCircleOutline';
 import Image from 'next/image';
 import { useRouter } from 'next/router';
-import { Game, GameStatus, UserGame } from '@/types';
-import { useAddUserGame } from '@/hooks/useUserGames';
-import { toast } from 'react-toastify';
+import { Game, UserGame, GameStatus } from '@/types';
 
 interface GameCardProps {
   game: Game;
@@ -16,15 +13,14 @@ interface GameCardProps {
 }
 
 const StyledIconButton = styled(IconButton)(({ theme }) => ({
-	'&.Mui-disabled': {
-	  color: 'white',
-	  backgroundColor: 'transparent',
-	},
-  }));
+  '&.Mui-disabled': {
+    color: 'white',
+    backgroundColor: 'transparent',
+  },
+}));
 
 const GameCard: React.FC<GameCardProps> = ({ game, userGames = [], onAddGame }) => {
   const router = useRouter();
-  const { mutate: addUserGame } = useAddUserGame();
 
   const handleNavigate = (slug: string) => {
     router.push(`/games/${slug}`);
@@ -34,7 +30,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, userGames = [], onAddGame }) 
 
   return (
     <Box>
-      <Box sx={{ cursor: 'pointer' }} onClick={() => handleNavigate(game.slug)}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', cursor: 'pointer' }} onClick={() => handleNavigate(game.slug)}>
         <Image
           src={
             game.imageUrl != null
@@ -47,7 +43,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, userGames = [], onAddGame }) 
           priority={true}
         />
       </Box>
-      <Box display="flex" alignItems="center" justifyContent="space-between" mt={1}>
+      <Box display="flex" flexDirection="column" alignItems="center" mt={1}>
         <Typography
           variant="h6"
           component="h2"
@@ -68,7 +64,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, userGames = [], onAddGame }) 
           </span>
         </Tooltip>
       </Box>
-      <Box sx={{ display: 'flex', gap: 1, mt: 2 }}>
+      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 2 }}>
         {game.genres.map((genre) => (
           <Chip color="primary" key={genre.id} label={genre.name} />
         ))}
