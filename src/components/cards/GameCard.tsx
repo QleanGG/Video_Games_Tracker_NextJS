@@ -43,7 +43,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, userGames = [], onAddGame }) 
           priority={true}
         />
       </Box>
-      <Box display="flex" flexDirection="column" alignItems="center" mt={1}>
+      <Box display="flex" alignItems="center" justifyContent="center" mt={0.5}>
         <Typography
           variant="h6"
           component="h2"
@@ -64,7 +64,7 @@ const GameCard: React.FC<GameCardProps> = ({ game, userGames = [], onAddGame }) 
           </span>
         </Tooltip>
       </Box>
-      <Box sx={{ display: 'flex', justifyContent: 'center', gap: 1, mt: 2 }}>
+      <Box sx={{ display: 'flex', gap: 1, mt: 2, justifyContent: 'flex-start', ml:'30px' }}>
         {game.genres.map((genre) => (
           <Chip color="primary" key={genre.id} label={genre.name} />
         ))}
