@@ -1,6 +1,5 @@
 import React, { useState, ChangeEvent } from 'react';
 import { Box, Grid, Typography, Button, TextField, Container, Skeleton } from '@mui/material';
-import { useGamesChoice } from '@/hooks/useGamesChoice';
 import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
 import GameCard from '@/components/cards/GameCard';
 import { GameStatus } from '@/types';
@@ -11,6 +10,8 @@ import GameFilters from '@/components/search/GameFilters';
 import { SelectChangeEvent } from '@mui/material/Select';
 import { Genre } from '@/types';
 import ApiError from '../ApiError';
+import { useGamesByPlatform } from '@/hooks/useGamesByPlatform';
+import { useAllGames } from '@/hooks/useAllGames';
 
 interface GameListProps {
   platformName?: string;
@@ -55,7 +56,13 @@ const GameList: React.FC<GameListProps> = ({ platformName, genres }) => {
     );
   };
 
-  const { data: gamesData, isLoading, error } = useGamesChoice(platformName, page, platformName ? 9 : 12, search, selectedGenre);
+  const allGamesQuery = useAllGames(page, 9, search, selectedGenre);
+  const gamesByPlatformQuery = useGamesByPlatform(platformName || '', page, 9, search, selectedGenre);
+
+  const gamesData = platformName ? gamesByPlatformQuery.data : allGamesQuery.data;
+  const isLoading = platformName ? gamesByPlatformQuery.isLoading : allGamesQuery.isLoading;
+  const error = platformName ? gamesByPlatformQuery.error : allGamesQuery.error;
+
 
   if (error) return <ApiError message='Error loading games' />;
 

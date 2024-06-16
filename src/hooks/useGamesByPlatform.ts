@@ -8,18 +8,19 @@ interface QueryParams {
   page: number;
   limit: number;
   search: string;
+  genre?: string;
 }
 
 const fetchGamesByPlatform = async ({
   queryKey,
 }: QueryFunctionContext<readonly [string, QueryParams]>): Promise<{ data: Game[], total: number, page: number, limit: number }> => {
-  const [_key, { platformName, page, limit, search }] = queryKey;
+  const [_key, { platformName, page, limit, search, genre }] = queryKey;
 
   try {
     const { data } = await mainApi.get<{ data: Game[], total: number, page: number, limit: number }>(
       `/platforms/${platformName}/games`,
       {
-        params: { page, limit, search },
+        params: { page, limit, search, genre },
       }
     );
     return data;
@@ -34,10 +35,11 @@ export const useGamesByPlatform = (
   page: number = 1,
   limit: number = 9,
   search: string = '',
+  genre: string = '',
   initialData?: { data: Game[], total: number, page: number, limit: number }
 ): UseQueryResult<{ data: Game[], total: number, page: number, limit: number }, Error> => {
   return useQuery({
-    queryKey: ['gamesByPlatform', { platformName, page, limit, search }] as const,
+    queryKey: ['gamesByPlatform', { platformName, page, limit, search, genre }] as const,
     queryFn: fetchGamesByPlatform,
     enabled: !!platformName,
     staleTime: 1000 * 60 * 5,
