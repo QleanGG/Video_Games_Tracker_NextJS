@@ -13,21 +13,22 @@ const EditUserGame: React.FC<EditUserGameProps> = ({ userGameId, onClose }) => {
   const { data: userGames } = useUserGames();
   const userGame = userGames?.find((game) => game.id === userGameId);
   const [status, setStatus] = useState(userGame?.status || '');
-  const [rating, setRating] = useState<number | undefined>(userGame?.rating || undefined);
+  const [rating, setRating] = useState<number | ''>(userGame?.rating || '');
   const [review, setReview] = useState<string | undefined>(userGame?.review || undefined);
   const { mutate: updateUserGame, isPending } = useUpdateUserGame();
 
   useEffect(() => {
     if (userGame) {
       setStatus(userGame.status);
-      setRating(userGame.rating !== null ? userGame.rating : undefined);
-      setReview(userGame.review || undefined);
+      setRating(userGame.rating ?? '');
+      setReview(userGame.review || '');
     }
   }, [userGame]);
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    updateUserGame({ id: userGameId, gameId: userGame?.game.id!, status: status as GameStatus, rating, review }, {
+    const parsedRating = rating !== '' ? parseFloat(rating.toString()) : undefined;
+    updateUserGame({ id: userGameId, gameId: userGame?.game.id!, status: status as GameStatus, rating: parsedRating, review }, {
       onSuccess: () => {
         toast.success('Game updated successfully');
         onClose();
@@ -56,7 +57,7 @@ const EditUserGame: React.FC<EditUserGameProps> = ({ userGameId, onClose }) => {
         label="Rating"
         type="number"
         value={rating !== undefined ? rating : ''}
-        onChange={(e) => setRating(e.target.value !== '' ? Number(e.target.value) : undefined)}
+        onChange={(e) => setRating(e.target.value !== '' ? Number(e.target.value) : '')}
         fullWidth
         margin="normal"
       />
