@@ -24,7 +24,7 @@ const GamesByPlatform: React.FC<GamesByPlatformProps> = ({ platformName }) => {
 
   const validPlatformName = platformMappings[platformName.toLowerCase()];
 
-  const { data: gamesData, isLoading, error } = useGamesByPlatform(validPlatformName, page, 9, searchQuery);
+  const { data: gamesData, isLoading, error } = useGamesByPlatform(platformName, page, 9, searchQuery);
   const { mutate: addUserGame } = useAddUserGame();
 
   useEffect(() => {

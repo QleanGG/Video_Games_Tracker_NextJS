@@ -1,6 +1,7 @@
 import { useQuery, QueryFunctionContext, UseQueryResult } from '@tanstack/react-query';
 import mainApi from '@/api/apiAxios';
 import { Game } from '../types';
+import { toast } from 'react-toastify';
 
 interface QueryParams {
   platformName: string;
@@ -23,7 +24,7 @@ const fetchGamesByPlatform = async ({
     );
     return data;
   } catch (error) {
-    console.error('Error fetching games by platform:', error);
+    toast.error('Error fetching games by platform:');
     throw error;
   }
 };
@@ -35,7 +36,6 @@ export const useGamesByPlatform = (
   search: string = '',
   initialData?: { data: Game[], total: number, page: number, limit: number }
 ): UseQueryResult<{ data: Game[], total: number, page: number, limit: number }, Error> => {
-  console.log('Using games by platform hook for platformName:', platformName);
   return useQuery({
     queryKey: ['gamesByPlatform', { platformName, page, limit, search }] as const,
     queryFn: fetchGamesByPlatform,
