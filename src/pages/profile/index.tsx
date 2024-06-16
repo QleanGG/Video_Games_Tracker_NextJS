@@ -1,6 +1,5 @@
-// pages/profile.tsx
 import React, { useEffect, useState } from 'react';
-import { Box, Typography, CircularProgress, Button, Avatar, Grid, Paper, Skeleton } from '@mui/material';
+import { Box, Typography, CircularProgress, Button, Avatar, Grid, Paper, Skeleton, Container } from '@mui/material';
 import { useRouter } from 'next/router';
 import { useUser } from '@/hooks/useUser';
 import ProfileForm from '@/components/profile/ProfileForm';
@@ -8,11 +7,15 @@ import styles from '@/styles/styles';
 import { useProfile } from '@/hooks/useProfile';
 import ProfileAvatar from '@/components/profile/ProfileAvatar';
 import { useGlobalLogout } from '@/utils/authUtils';
+import { useUserGames } from '@/hooks/useUserGames';
+import GameGrid from '@/components/userGames/GameGrid';
+import { UserGame, GameStatus } from '@/types';
 
 const ProfilePage: React.FC = () => {
   const { data: user, isLoading: userLoading } = useUser();
   const router = useRouter();
   const { data, isPending: profilePending } = useProfile(!!user);
+  const { data: userGames = [], isLoading: gamesLoading } = useUserGames();
   const [editMode, setEditMode] = useState(false);
   const { logout } = useGlobalLogout();
 
@@ -29,6 +32,15 @@ const ProfilePage: React.FC = () => {
   const handleCancelEdit = () => {
     setEditMode(false);
   };
+
+  const filterByStatus = (status: GameStatus) => (games: UserGame[]) =>
+    games.filter((game) => game.status === status);
+
+  const statusSections = [
+    { title: 'Completed', status: GameStatus.Completed },
+    { title: 'Finished', status: GameStatus.Finished },
+    { title: 'Currently Playing', status: GameStatus.CurrentlyPlaying },
+  ];
 
   if (profilePending || userLoading) {
     return (
@@ -93,21 +105,29 @@ const ProfilePage: React.FC = () => {
           </Grid>
         </Grid>
       )}
-      <Box sx={{ mt: 4, width: '100%' }}>
-        <Typography variant="h5" sx={{ mb: 2 }}>Your Games</Typography>
-        {data.games.length > 0 ? (
-          data.games.map((userGame) => (
-            <Box key={userGame.id} sx={styles.userGameCard}>
-              <Typography variant="h6">{userGame.game.title}</Typography>
-              <Typography variant="body2">Status: {userGame.status}</Typography>
-              <Typography variant="body2">Rating: {userGame.rating}</Typography>
-              <Typography variant="body2">Review: {userGame.review}</Typography>
+      <Container sx={{ py: 2, mt: 4, width: '100%' }}>
+        {statusSections.map(({ title, status }) => {
+          const filteredGames = filterByStatus(status)(userGames);
+          if (filteredGames.length === 0) return null;
+          return (
+            <Box key={status} sx={{ mb: 6 }}>
+              <Typography
+                variant="h5"
+                sx={{
+                  mb: 3,
+                  textAlign: 'center',
+                  fontWeight: 'bold',
+                  borderBottom: '2px solid #ddd',
+                  pb: 1,
+                }}
+              >
+                {title}
+              </Typography>
+              <GameGrid userGames={filteredGames} isLoading={gamesLoading} />
             </Box>
-          ))
-        ) : (
-          <Typography variant="body2">You have no games added.</Typography>
-        )}
-      </Box>
+          );
+        })}
+      </Container>
     </Box>
   );
 };
