@@ -24,7 +24,7 @@ const PlatformList: React.FC = () => {
 			<Grid container spacing={3}>
 				{platforms.map((platform: Platform) => (
 					<Grid item xs={12} sm={6} md={4} lg={3} key={platform.id}>
-						<Card>
+						<Card sx={{textAlign:'center'}}>
 							<CardHeader title={platform.name} />
               <CardMedia>
               <Image
