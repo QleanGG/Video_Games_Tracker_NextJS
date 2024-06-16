@@ -5,6 +5,7 @@ interface QueryParams {
 	page?: number;
 	limit?: number;
 	search?: string;
+	genre?: string;
 }
 
 export const fetchAllGames = async (params: QueryParams = {}): Promise<{ data: Game[], total: number, page: number, limit: number }> => {

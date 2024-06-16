@@ -19,10 +19,10 @@
 
 ### Components to Add
 1. **LatestNews**: Display the latest news related to games and the gaming industry.
-2. **UserProfile**: A component to display and edit user profiles.
+2. **UserProfile**: A component to display and edit user profiles. 
 3. **GameDetails**: A component to show detailed information about a specific game.
 4. **GameList**: A component to list games based on various filters and categories.
-5. **Review**: A component to show user reviews for games.
+5. **Review**: A component to show user reviews for games. 
 
 ### Pages to Add
 1. **Login Page**: A page for users to log in.
@@ -37,18 +37,15 @@
 1. **Authentication**: Implement login and registration using Passport.js.
 2. **Authorization**: Protect routes and ensure only authenticated users can access certain pages.
 3. **API Integration**: Fetch game data from an external API.
-4. **Redux Integration**: Manage global state using Redux.
-5. **Responsive Design**: Ensure the website is responsive and works well on all devices.
-6. **Testing**: Write unit and integration tests for components and pages.
-7. **Styling**: Improve the visual styling of the website using Material-UI and custom CSS.
+4. **Responsive Design**: Ensure the website is responsive and works well on all devices.
+5. **Testing**: Write unit and integration tests for components and pages.
+6. **Styling**: Improve the visual styling of the website using Material-UI and custom CSS.
 
 ### Enhancements
 1. **Game Recommendations**: Implement a recommendation system based on user preferences.
 2. **User Reviews and Ratings**: Allow users to write reviews and rate games.
 3. **Game Tracking**: Enable users to track their game progress.
-4. **Notifications**: Implement a notification system to alert users of updates and new content.
-5. **Search Functionality**: Add a search bar to easily find games and content.
-6. **Dark Mode**: Implement a dark mode for better user experience during night time.
+4. **Search Functionality**: Add a search bar to easily find games and content.
 
 ## Additional Notes
 
