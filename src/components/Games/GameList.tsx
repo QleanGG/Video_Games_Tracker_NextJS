@@ -62,7 +62,7 @@ const GameList: React.FC<GameListProps> = ({ platformName, genres }) => {
   return (
     <Container>
       <Typography variant="h4" component="h1" gutterBottom>
-        Games {platformName ? `for ${platformName}` : ''}
+        Games {platformName ? `for ${platformName.toUpperCase()}` : ''}
       </Typography>
       <Box sx={{ display: 'flex', width: '100%' }}>
         <Box sx={{ width: '20%', pr: 2 }}>
