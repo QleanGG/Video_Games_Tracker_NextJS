@@ -1,54 +1,140 @@
-# Game Vault Progress
 
-## Current Components
+# GameVault Frontend
 
-- CallToAction
-- FeaturedGames
-- Footer
-- HeroSection
-- Layout
-- Nav
+This is the frontend for GameVault, a comprehensive platform for tracking and managing your video game library. The application is built with React, TypeScript, and Material-UI, and utilizes React Query for data fetching and state management.
 
-## Current Pages
+## Features
 
-- _app.tsx
-- _document.tsx
-- index.tsx
+- User authentication with Google OAuth
+- Search and filter games by title and genre
+- View games by platform
+- User game library management (add, edit, delete games)
+- User profile management
+- Responsive design
 
-## To-Do List
+## Technologies Used
 
-### Components to Add
-1. **LatestNews**: Display the latest news related to games and the gaming industry.
-2. **UserProfile**: A component to display and edit user profiles. 
-3. **GameDetails**: A component to show detailed information about a specific game.
-4. **GameList**: A component to list games based on various filters and categories.
-5. **Review**: A component to show user reviews for games. 
+- **React**: A JavaScript library for building user interfaces.
+- **TypeScript**: A strongly typed programming language that builds on JavaScript.
+- **Material-UI**: A popular React UI framework.
+- **React Query**: For data fetching and state management.
+- **Next.js**: A React framework for server-side rendering and static site generation.
+- **React Router**: For routing and navigation.
+- **Axios**: For making HTTP requests.
+- **React Toastify**: For displaying notifications.
+- **Skeletons**: For loading states.
 
-### Pages to Add
-1. **Login Page**: A page for users to log in.
-2. **Register Page**: A page for new users to sign up.
-3. **Games Page**: A page to list and filter all games.
-4. **Platforms Page**: A page to list and filter games by platform.
-5. **Profile Page**: A page for users to view and edit their profiles.
-6. **Game Details Page**: A page to show detailed information about a specific game.
-7. **User Reviews Page**: A page to show user reviews.
+## Getting Started
 
-### Features to Implement
-1. **Authentication**: Implement login and registration using Passport.js.
-2. **Authorization**: Protect routes and ensure only authenticated users can access certain pages.
-3. **API Integration**: Fetch game data from an external API.
-4. **Responsive Design**: Ensure the website is responsive and works well on all devices.
-5. **Testing**: Write unit and integration tests for components and pages.
-6. **Styling**: Improve the visual styling of the website using Material-UI and custom CSS.
+### Prerequisites
 
-### Enhancements
-1. **Game Recommendations**: Implement a recommendation system based on user preferences.
-2. **User Reviews and Ratings**: Allow users to write reviews and rate games.
-3. **Game Tracking**: Enable users to track their game progress.
-4. **Search Functionality**: Add a search bar to easily find games and content.
+- Node.js (v14 or later)
+- npm or yarn
 
-## Additional Notes
+### Installation
 
-- Ensure all components are well-documented.
-- Follow best practices for accessibility and performance.
-- Regularly commit and push changes to the repository.
+1. **Clone the repository**:
+
+   ```bash
+   git clone https://github.com/qleangg/Video_Games_Tracker_NextJS.git
+   cd gamevault-frontend
+   ```
+
+2. **Install dependencies**:
+
+   ```bash
+   npm install
+   # or
+   yarn install
+   ```
+
+3. **Set up environment variables**:
+
+   Create a `.env.local` file in the root of your project and add the following variables:
+
+   ```plaintext
+   NEXT_PUBLIC_BACKEND_URL=http://localhost:3000
+   NEXT_PUBLIC_GOOGLE_CLIENT_ID=your-google-client-id
+   NEXT_PUBLIC_YOUTUBE_API_KEY=your-youtube-api-key
+   ```
+
+### Running the Application
+
+To start the development server:
+
+```bash
+npm run dev
+# or
+yarn dev
+```
+
+The application will be available at `http://localhost:3001`.
+
+### Building for Production
+
+To build the application for production:
+
+```bash
+npm run build
+# or
+yarn build
+```
+
+To start the production server:
+
+```bash
+npm run start
+# or
+yarn start
+```
+
+### Running Tests
+
+To run tests:
+
+```bash
+npm test
+# or
+yarn test
+```
+
+## Project Structure
+
+```plaintext
+.
+├── components    # Reusable components
+├── hooks         # Custom hooks for data fetching and state management
+├── pages         # Next.js pages
+├── public        # Public assets
+├── styles        # Styling (CSS, Mui style, etc.)
+├── types         # TypeScript types
+├── utils         # Utility functions
+├── Api           # axios request to backend
+├── services      # Services functions
+├── mappings      # Mappings for types
+├── README.md
+├── .env.local.example
+├── .gitignore
+├── package.json
+├── tsconfig.json
+└── next.config.js
+```
+
+## Contributing
+
+Contributions are welcome! Please follow these steps:
+
+1. Fork the repository.
+2. Create a new branch (`git checkout -b feature-branch`).
+3. Make your changes.
+4. Commit your changes (`git commit -m 'Add some feature'`).
+5. Push to the branch (`git push origin feature-branch`).
+6. Open a pull request.
+
+## License
+
+This project is licensed under the MIT License. See the [LICENSE](LICENSE) file for details.
+
+## Contact
+
+For any questions or suggestions, feel free to reach out to the project maintainer at [qleantest@gmail.com](mailto:qleantest@gmail.com).
