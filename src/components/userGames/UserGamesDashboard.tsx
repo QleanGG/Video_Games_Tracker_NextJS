@@ -1,69 +1,49 @@
-import React, { useState } from 'react';
-import { Box, Button, Typography, List, ListItem, ListItemText, ListItemSecondaryAction, IconButton, Modal } from '@mui/material';
-import { useUserGames, useDeleteUserGame } from '@/hooks/useUserGames';
-import AddUserGame from './AddUserGame';
-import EditUserGame from './EditUserGame';
-import { UserGame } from '@/types';
-import EditIcon from '@mui/icons-material/Edit';
-import DeleteIcon from '@mui/icons-material/Delete';
-import { toast } from 'react-toastify';
-import styles from '@/styles/styles';
+import React from 'react';
+import { Box, Container, Typography } from '@mui/material';
+import { useUserGames } from '@/hooks/useUserGames';
+import GameGrid from './GameGrid';
+import { UserGame, GameStatus } from '@/types';
 
-const UserGamesDashboard = () => {
-  const { data: userGames, isLoading } = useUserGames();
-  const { mutate: deleteUserGame } = useDeleteUserGame();
-  const [isAddModalOpen, setIsAddModalOpen] = useState(false);
-  const [editUserGameId, setEditUserGameId] = useState<number | null>(null);
+const UserGamesDashboard: React.FC = () => {
+  const { data: userGames = [], isLoading } = useUserGames();
 
-  const handleDelete = (userGameId: number) => {
-    deleteUserGame(userGameId, {
-      onSuccess: () => {
-        toast.success('Game deleted successfully');
-      },
-      onError: () => {
-        toast.error('Failed to delete game');
-      },
-    });
-  };
+  const filterByStatus = (status: GameStatus) => (games: UserGame[]) =>
+    games.filter((game) => game.status === status);
+
+  const statusSections = [
+    { title: 'Currently Playing', status: GameStatus.CurrentlyPlaying },
+    { title: 'Own', status: GameStatus.Own },
+    { title: 'On Hold', status: GameStatus.OnHold },
+    { title: 'Interested', status: GameStatus.Interested },
+    { title: 'Completed', status: GameStatus.Completed },
+    { title: 'Finished', status: GameStatus.Finished },
+    { title: 'Dropped', status: GameStatus.Dropped },
+  ];
 
   return (
-    <Box sx={styles.dashboardContainer}>
-      {/* <Button variant="contained" sx={styles.addButton} onClick={() => setIsAddModalOpen(true)}>
-        Add Game
-      </Button> */}
-      <List sx={{ mt: 2 }}>
-        {isLoading ? (
-          <Typography>Loading...</Typography>
-        ) : (
-          userGames?.map((userGame) => (
-            <ListItem key={userGame.id} sx={styles.listItem}>
-              <ListItemText
-                primary={userGame.game.title}
-                secondary={`Status: ${userGame.status}, Rating: ${userGame.rating}`}
-              />
-              <ListItemSecondaryAction>
-                <IconButton onClick={() => setEditUserGameId(userGame.id)} sx={{ color: 'text.primary' }}>
-                  <EditIcon />
-                </IconButton>
-                <IconButton onClick={() => handleDelete(userGame.id)} sx={{ color: 'text.primary' }}>
-                  <DeleteIcon />
-                </IconButton>
-              </ListItemSecondaryAction>
-            </ListItem>
-          ))
-        )}
-      </List>
-      <Modal open={isAddModalOpen} onClose={() => setIsAddModalOpen(false)}>
-        <Box sx={styles.modalContainer}>
-          <AddUserGame />
-        </Box>
-      </Modal>
-      <Modal open={!!editUserGameId} onClose={() => setEditUserGameId(null)}>
-        <Box sx={styles.modalContainer}>
-          <EditUserGame userGameId={editUserGameId!} onClose={() => setEditUserGameId(null)} />
-        </Box>
-      </Modal>
-    </Box>
+    <Container sx={{ py: 2 }}>
+      {statusSections.map(({ title, status }) => {
+        const filteredGames = filterByStatus(status)(userGames);
+        if (filteredGames.length === 0) return null;
+        return (
+          <Box key={status} sx={{ mb: 6 }}>
+            <Typography
+              variant="h5"
+              sx={{
+                mb: 3,
+                textAlign: 'center',
+                fontWeight: 'bold',
+                borderBottom: '2px solid #ddd',
+                pb: 1,
+              }}
+            >
+              {title}
+            </Typography>
+            <GameGrid userGames={filteredGames} isLoading={isLoading} />
+          </Box>
+        );
+      })}
+    </Container>
   );
 };
 
