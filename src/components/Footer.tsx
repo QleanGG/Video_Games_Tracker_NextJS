@@ -6,7 +6,19 @@ const Footer = () => {
         <Box sx={styles.footer}>
             <Typography variant="body2" align="center">
                 &copy; 2024 Game Vault. Made by 
-                <Link href="https://www.linkedin.com/in/guy-guzman/" target="_blank" rel="noopener noreferrer" sx={styles.footerLink}>Guy Guzman</Link> 
+                <Link
+                    href="https://www.linkedin.com/in/guy-guzman/"
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    sx={{
+                        ...styles.footerLink,
+                        '&:hover': {
+                            color: 'white',
+                        }
+                    }}
+                >
+                    Guy Guzman
+                </Link>
             </Typography>
         </Box>
     )

@@ -28,12 +28,12 @@ const PlatformList: React.FC = () => {
 							<CardHeader title={platform.name} />
               <CardMedia>
               <Image
-									src={`/platforms/${platform.name.toLowerCase().replace(/\s+/g, '_')}.webp`} // Adjust the path and filename accordingly
+									src={`/platforms/${platform.name.toLowerCase().replace(/\s+/g, '_')}.webp`} 
 									alt={platform.name}
 									width={267}
 									height={200}
 									objectFit="cover"
-									quality={100}
+									quality={75}
 									priority={true}
 								/>
               </CardMedia>
