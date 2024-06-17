@@ -1,5 +1,5 @@
 import React, { useState, ChangeEvent } from 'react';
-import { Box, Grid, Typography, Button, TextField, Container, Skeleton } from '@mui/material';
+import { Box, Grid, Typography, Button, TextField, Container, Skeleton, useMediaQuery, useTheme } from '@mui/material';
 import { useAddUserGame, useUserGames } from '@/hooks/useUserGames';
 import GameCard from '@/components/cards/GameCard';
 import { GameStatus } from '@/types';
@@ -26,6 +26,8 @@ const GameList: React.FC<GameListProps> = ({ platformName, genres }) => {
   const { data: userGames, isLoading: isUserGamesLoading } = useUserGames(!!user);
   const { mutate: addUserGame } = useAddUserGame();
   const router = useRouter();
+  const theme = useTheme();
+  const isTabletOrMobile = useMediaQuery(theme.breakpoints.down('lg'));
 
   const handleSearchChange = (event: ChangeEvent<HTMLInputElement>) => {
     setSearch(event.target.value);
@@ -63,7 +65,6 @@ const GameList: React.FC<GameListProps> = ({ platformName, genres }) => {
   const isLoading = platformName ? gamesByPlatformQuery.isLoading : allGamesQuery.isLoading;
   const error = platformName ? gamesByPlatformQuery.error : allGamesQuery.error;
 
-
   if (error) return <ApiError message='Error loading games' />;
 
   return (
@@ -71,8 +72,8 @@ const GameList: React.FC<GameListProps> = ({ platformName, genres }) => {
       <Typography variant="h4" component="h1" gutterBottom>
         Games {platformName ? `for ${platformName.toUpperCase()}` : ''}
       </Typography>
-      <Box sx={{ display: 'flex', width: '100%' }}>
-        <Box sx={{ width: '20%', pr: 2 }}>
+      <Box sx={{ display: 'flex', flexDirection: isTabletOrMobile ? 'column' : 'row', width: '100%' }}>
+        <Box sx={{ width: isTabletOrMobile ? '100%' : '20%', pr: isTabletOrMobile ? 0 : 2 }}>
           <GameFilters
             search={search}
             genre={selectedGenre}
@@ -81,12 +82,12 @@ const GameList: React.FC<GameListProps> = ({ platformName, genres }) => {
             onGenreChange={handleGenreChange}
           />
         </Box>
-        <Box sx={{ width: '80%' }}>
-          <Grid container spacing={4}>
+        <Box sx={{ width: isTabletOrMobile ? '90' : '80%' }}>
+          <Grid container spacing={2}>
             {(isLoading || isUserGamesLoading) ? (
-              Array.from(new Array(12)).map((_, index) => (
+              Array.from(new Array(9)).map((_, index) => (
                 <Grid item xs={12} sm={6} md={4} key={index}>
-                  <Skeleton variant="rectangular" width={267} height={358} />
+                  <Skeleton variant="rectangular" width="100%" height={358} />
                   <Box display="flex" alignItems="center" justifyContent="space-between" mt={1}>
                     <Skeleton variant="text" width="70%" />
                     <Skeleton variant="circular" width={40} height={40} />

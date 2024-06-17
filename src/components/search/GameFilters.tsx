@@ -14,6 +14,7 @@ import {
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import ExpandLessIcon from '@mui/icons-material/ExpandLess';
 import { Genre } from '@/types';
+import FilterListIcon from '@mui/icons-material/FilterList';
 
 interface GameFiltersProps {
 	search: string;
