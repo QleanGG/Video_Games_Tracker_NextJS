@@ -32,7 +32,7 @@ class MyDocument extends Document {
             href="https://fonts.googleapis.com/css2?family=Open+Sans:wght@400;600&family=Roboto:wght@400;700&display=swap"
             rel="stylesheet"
           />
-          <link rel="preconnect" href="https://game-vault-express.onrender.com" />
+          <link rel="preconnect" href="https://api.gamevault.live" />
           <link rel="icon" href="/favicon.ico" />
           <meta name="author" content="Guy Guzman" />
           <meta name="robots" content="index, follow" />
