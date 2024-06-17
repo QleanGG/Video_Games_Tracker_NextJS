@@ -129,11 +129,11 @@ const GameList: React.FC<GameListProps> = ({ platformName, genres }) => {
               variant="contained"
               color="primary"
               onClick={() => {
-                if (!isLoading && gamesData && gamesData.data && gamesData.data.length === (platformName ? 9 : 12)) {
+                if (!isLoading && gamesData && gamesData.data && gamesData.data.length === 9) {
                   setPage((old) => old + 1);
                 }
               }}
-              disabled={!gamesData || !gamesData.data || gamesData.data.length < (platformName ? 9 : 12)}
+              disabled={!gamesData || !gamesData.data || gamesData.data.length < 9}
               sx={{ mx: 1 }}
             >
               Next

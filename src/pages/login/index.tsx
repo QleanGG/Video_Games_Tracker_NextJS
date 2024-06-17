@@ -3,7 +3,6 @@ import { Box, TextField, Button, Typography, Divider, Skeleton } from '@mui/mate
 import GoogleIcon from '@mui/icons-material/Google';
 import { useLogin } from '@/hooks/useLogin';
 import styles from '@/styles/styles';
-import { toast } from 'react-toastify';
 import { GetStaticProps } from 'next';
 
 const Login = () => {
@@ -19,13 +18,6 @@ const Login = () => {
   const handleGoogleLogin = () => {
     window.location.href = `${process.env.NEXT_PUBLIC_BACKEND_URL}/api/auth/google`;
   };
-
-  useEffect(() => {
-    if (isError) {
-      toast.error(error.message);
-    }
-  }, [isError, error]);
-
 
   return (
     <Box sx={styles.formContainer}>

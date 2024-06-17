@@ -6,3 +6,10 @@
       opacity: 1;
     }
   }
+
+  .toast-bottom-center {
+    bottom: 32% !important; 
+    left: 50% !important;
+    transform: translateX(-50%) !important;
+    position: fixed !important;
+  }
