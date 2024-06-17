@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Box, Button, TextField, MenuItem, Select, InputLabel, FormControl } from '@mui/material';
+import { Box, Button, TextField, MenuItem, Select, InputLabel, FormControl, FormHelperText } from '@mui/material';
 import { useUpdateUserGame, useUserGames } from '@/hooks/useUserGames';
 import { GameStatus, UserGame } from '@/types';
 import { toast } from 'react-toastify';
@@ -53,14 +53,16 @@ const EditUserGame: React.FC<EditUserGameProps> = ({ userGameId, onClose }) => {
           ))}
         </Select>
       </FormControl>
-      <TextField
-        label="Rating"
-        type="number"
-        value={rating !== undefined ? rating : ''}
-        onChange={(e) => setRating(e.target.value !== '' ? Number(e.target.value) : '')}
-        fullWidth
-        margin="normal"
-      />
+      <FormControl fullWidth margin="normal">
+        <TextField
+          label="Rating"
+          type="number"
+          value={rating !== undefined ? rating : ''}
+          onChange={(e) => setRating(e.target.value !== '' ? Number(e.target.value) : '')}
+          fullWidth
+        />
+        <FormHelperText>Rating is 1-10</FormHelperText>
+      </FormControl>
       <TextField
         label="Review"
         value={review !== undefined ? review : ''}
