@@ -4,18 +4,18 @@ const nextConfig = {
 	reactStrictMode: true,
 	images: {
 		remotePatterns: [
-			{
-				protocol: 'http',
-				hostname: 'localhost',
-				port: '3000',
-				pathname: '/**',
-			},
-			{
-				protocol: 'http',
-				hostname: 'localhost',
-				port: '3000',
-				pathname: '/uploads/**',
-			},
+			// {
+			// 	protocol: 'http',
+			// 	hostname: 'localhost',
+			// 	port: '3000',
+			// 	pathname: '/**',
+			// },
+			// {
+			// 	protocol: 'http',
+			// 	hostname: 'localhost',
+			// 	port: '3000',
+			// 	pathname: '/uploads/**',
+			// },
 			{
 				protocol: 'https',
 				hostname: 'game-vault-express.onrender.com',
